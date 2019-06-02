@@ -133,6 +133,7 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+    'is_registrable' => 'The :attribute has not been registered with the system, please ask an admin.',
 
     /*
     |--------------------------------------------------------------------------

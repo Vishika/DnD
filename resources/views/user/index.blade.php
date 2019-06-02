@@ -7,14 +7,17 @@
             @foreach ($users as $user)
             	<a class="button {{ $user->active ? 'active' : 'inactive' }}" href="/user/{{ $user->id }}">{{ $user->name }}</a>
             @endforeach
+            @foreach ($registrables as $registrable)
+            	<span class="button registrable">{{ $registrable->discord_name }}</span>
+            @endforeach
     	</div>
     </div>
     
     <div class="form-group row">
         <div class="col-md-6">
-            <form method="GET" action="/user/create">
+            <form method="GET" action="/registrable/create">
                 @csrf
-                <button type="submit" class="btn btn-primary">{{ __('Register User') }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Register Discord User') }}</button>
         	</form>
         </div>
     </div>

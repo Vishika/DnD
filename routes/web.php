@@ -28,10 +28,13 @@
  Route::patch('/user/{user}', 'UserController@update');
  Route::delete('/user/{user}', 'UserController@destroy'); */
 
+Auth::routes();
+
 Route::get('/', 'PagesController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+Route::get('/registrable/create', 'RegistrableController@create');
+Route::post('/registrable', 'RegistrableController@store');
 
 Route::get('/user', 'UserController@index');
 Route::get('/user/{user}', 'UserController@show');
@@ -39,11 +42,13 @@ Route::get('/user/{user}/edit', 'UserController@edit');
 Route::patch('/user/{user}', 'UserController@update');
 
 Route::get('/character', 'CharacterController@index');
-Route::get('/character/{character}', 'CharacterController@show');
 Route::get('/character/create', 'CharacterController@create');
-Route::post('/character', 'CharacterController@store');
 Route::get('/character/{character}/edit', 'CharacterController@edit');
+Route::get('/character/{character}', 'CharacterController@show');
+Route::post('/character', 'CharacterController@store');
 Route::patch('/character/{character}', 'CharacterController@update');
 
 Route::get('/session', 'SessionsController@index');
+
+
 

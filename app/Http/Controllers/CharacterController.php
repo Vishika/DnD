@@ -20,36 +20,6 @@ class CharacterController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        $user_id = $request->user_id;
-        return view('character.create', compact('user_id'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // TODO logic to check for max character and right user
-        $validated = request()->validate([
-            'user_id' => ['required', 'integer'],
-            'name' => ['required', 'string', 'min:3', 'max:191', 'unique:users'],
-            'race' => ['required', 'string', 'min:3', 'max:191'],
-            'class' => ['required', 'string', 'min:3', 'max:191'],
-        ]);
-        Character::create($validated);
-        return redirect("/user/" . request()->user_id);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Character  $character
@@ -90,16 +60,34 @@ class CharacterController extends Controller
         $character->update($validated);
         return redirect('/character/' . $character->id);
     }
-
+    
     /**
-     * Remove the specified resource from storage.
+     * Show the form for creating a new resource.
      *
-     * @param  \App\Character  $character
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Character $character)
+    public function create(Request $request)
     {
-        $character->delete();
-        return redirect('/character');
+        $user_id = $request->user_id;
+        return view('character.create', compact('user_id'));
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        // TODO logic to check for max character and right user
+        $validated = request()->validate([
+            'user_id' => ['required', 'integer'],
+            'name' => ['required', 'string', 'min:3', 'max:191', 'unique:users'],
+            'race' => ['required', 'string', 'min:3', 'max:191'],
+            'class' => ['required', 'string', 'min:3', 'max:191'],
+        ]);
+        Character::create($validated);
+        return redirect("/user/" . request()->user_id);
     }
 }

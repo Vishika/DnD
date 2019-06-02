@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Registrable;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('user.index', compact('users'));
+        $registrables = Registrable::all();
+        return view('user.index', ['users' => $users, 'registrables' => $registrables]);
     }
 
     /**

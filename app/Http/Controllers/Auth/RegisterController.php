@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Rules\IsRegistrable;
 
 class RegisterController extends Controller
 {
@@ -50,7 +51,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'min:3', 'max:12', 'unique:users'],
-            'discord_name' => ['required', 'string', 'min:3', 'max:191', 'regex:/.*#\d{4}\b/i', 'unique:users'],
+            'discord_name' => ['bail', 'required', 'string', 'min:3', 'max:191', 'regex:/.*#\d{4}\b/i', 'unique:users', new IsRegistrable()],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'max:191', 'confirmed'],
         ]);
