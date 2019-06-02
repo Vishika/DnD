@@ -24,6 +24,7 @@ class CreateCharactersTable extends Migration
             $table->string('class');
             $table->boolean('active')->default(true);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

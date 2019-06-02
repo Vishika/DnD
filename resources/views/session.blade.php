@@ -1,10 +1,9 @@
-@extends('layout')
-
-@section('title', 'Sessions')
-
+@extends('layouts.app')
+@section('header', 'Sessions')
 @section('content')
+
 	<ul>
-		@foreach($sessions as $session)
+		@foreach ($sessions as $session)
 		<li>{{$session}}</li>
 		@endforeach
 	</ul>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -16,33 +17,6 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('user.index', compact('users'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('user.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $validated = request()->validate([
-            'name' => 'required|min:3',
-            'discord_name' => 'required|regex:/.*#\d{4}\b/i',
-            'password' => 'required|confirmed'
-        ]);
-        User::create($validated);
-        return redirect('/user');
     }
 
     /**
@@ -76,23 +50,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $request->merge(array('active' => $request->filled('active')));
         $validated = request()->validate([
-            'name' => 'required|min:3',
-            'password' => 'required|confirmed'
+            'name' => ['required', 'string', 'min:3', 'max:12'],
+            'email' => ['required', 'string', 'email', 'max:191'],
+            'password' => ['required', 'string', 'min:8', 'max:191', 'confirmed'],
+            'active' => ['boolean'],
         ]);
+        $validated['password'] = Hash::make($validated['password']);
         $user->update($validated);
         return redirect("/user/$user->id");
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $user->delete();
-        return redirect('/user');
     }
 }

@@ -20,17 +20,30 @@
  * PATCH /x/1 (update)
  * DELETE /x/1 (destroy)
  */
+/* Route::get('/user', 'UserController@index');
+ Route::get('/user/create', 'UserController@create');
+ Route::get('/user/{user}', 'UserController@show');
+ Route::post('/user', 'UserController@store');
+ Route::get('/user/{user}/edit', 'UserController@edit');
+ Route::patch('/user/{user}', 'UserController@update');
+ Route::delete('/user/{user}', 'UserController@destroy'); */
 
 Route::get('/', 'PagesController@index');
-Route::get('/session', 'SessionsController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('user', 'UserController');
-Route::resource('character', 'CharacterController');
+Auth::routes();
 
-/* Route::get('/user', 'UserController@index');
-Route::get('/user/create', 'UserController@create');
+Route::get('/user', 'UserController@index');
 Route::get('/user/{user}', 'UserController@show');
-Route::post('/user', 'UserController@store');
 Route::get('/user/{user}/edit', 'UserController@edit');
 Route::patch('/user/{user}', 'UserController@update');
-Route::delete('/user/{user}', 'UserController@destroy'); */
+
+Route::get('/character', 'CharacterController@index');
+Route::get('/character/{character}', 'CharacterController@show');
+Route::get('/character/create', 'CharacterController@create');
+Route::post('/character', 'CharacterController@store');
+Route::get('/character/{character}/edit', 'CharacterController@edit');
+Route::patch('/character/{character}', 'CharacterController@update');
+
+Route::get('/session', 'SessionsController@index');
+

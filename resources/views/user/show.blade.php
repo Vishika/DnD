@@ -1,32 +1,56 @@
-@extends('layout')
-
-@section('title', $user->name)
-
+@extends('layouts.app')
+@section('header', $user->name)
 @section('content')
-<ul class="wrapper">
-    <li class="form-row">
-    	<label for="name">Name</label>
-        <input type="text" readonly name="name" value="{{ $user->name }}">
-    </li>
-    <li class="form-row">
-        <label for="discord_name">Discord Name</label>
-        <input type="text" readonly name=discord_name value="{{ $user->discord_name }}">
-    </li>
-    <li class="form-row">
-        <label for="password">Password</label>
-        <input type="text" readonly name="password" value="{{ $user->password }}">
-    </li>
-</ul>
-<div class="button-wrapper">
-	<a class="button" href="/user/{{ $user->id }}/edit">Edit</a>
-	@foreach ($user->characters as $character)
-    <a class="button {{ $character->active ? 'active' : 'inactive' }}" href="/character/{{ $character->id }}">{{ $character->name }}</a>
-	@endforeach
-	<form method="POST" action="/character/create">
-		@method('GET')
-		@csrf
-		<input type="hidden" name="user_id" value="{{ $user->id }}">
-		<button type="submit">New Char</button>
-	</form>
-</div>
+
+	<div class="form-group row">
+        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+        <div class="col-md-6">
+            <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" readonly="readonly">
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label for="discord_name" class="col-md-4 col-form-label text-md-right">{{ __('Discord Name') }}</label>
+        <div class="col-md-6">
+            <input id="discord_name" type="text" class="form-control" name="discord_name" value="{{ $user->discord_name }}" readonly="readonly">
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+        <div class="col-md-6">
+            <input id="email" type="text" class="form-control" name="email" value="{{ $user->email }}" readonly="readonly">
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <div class="col-md-6 offset-md-4">
+            <form method="GET" action="/user/{{ $user->id }}/edit">
+                @csrf
+                <button type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
+        	</form>
+        </div>
+    </div>
+
+    @if (count($user->characters) > 0)
+    	<div class="form-group row">
+    		<label class="col-md-4 col-form-person-label text-md-right">{{ __('Characters') }}</label>
+            <div class="col-md-6 people">
+            @foreach ($user->characters as $character)
+            	<a class="{{ $character->active ? 'active' : 'inactive' }}" href="/character/{{ $character->id }}">{{ __($character->name) }}</a>
+            @endforeach
+            </div>
+        </div>
+    @endif
+    
+    <div class="form-group row mb-0">
+        <div class="col-md-6 offset-md-4">
+            <form method="POST" action="/character/create">
+        		@method('GET')
+        		<input type="hidden" name="user_id" value="{{ $user->id }}">
+                <button type="submit" class="btn btn-primary">{{ __('New Char') }}</button>
+        	</form>
+        </div>
+    </div>
+    
 @endsection

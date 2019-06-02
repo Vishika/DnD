@@ -14,6 +14,7 @@ class CharacterController extends Controller
      */
     public function index()
     {
+        //$characters = Character::where('user_id', auth()->id())->get();
         $characters = Character::all();
         return view('character.index', compact('characters'));
     }
@@ -39,10 +40,10 @@ class CharacterController extends Controller
     {
         // TODO logic to check for max character and right user
         $validated = request()->validate([
-            'user_id' => 'required',
-            'name' => 'required|min:2',
-            'race' => 'required',
-            'class' => 'required'
+            'user_id' => ['required', 'integer'],
+            'name' => ['required', 'string', 'min:3', 'max:191', 'unique:users'],
+            'race' => ['required', 'string', 'min:3', 'max:191'],
+            'class' => ['required', 'string', 'min:3', 'max:191'],
         ]);
         Character::create($validated);
         return redirect("/user/" . request()->user_id);
@@ -79,10 +80,12 @@ class CharacterController extends Controller
      */
     public function update(Request $request, Character $character)
     {
+        $request->merge(array('active' => $request->filled('active')));
         $validated = request()->validate([
-            'name' => 'required|min:3',
-            'race' => 'required|min:3',
-            'class' => 'required|min:3',
+            'name' => ['required', 'string', 'min:3', 'max:191'],
+            'race' => ['required', 'string', 'min:3', 'max:191'],
+            'class' => ['required', 'string', 'min:3', 'max:191'],
+            'active' => ['boolean'],
         ]);
         $character->update($validated);
         return redirect('/character/' . $character->id);

@@ -1,11 +1,13 @@
-@extends('layout')
-
-@section('title', 'Characters')
-
+@extends('layouts.app')
+@section('header', 'Characters')
 @section('content')
-<div class="button-wrapper">
-	@foreach ($characters as $character)
-    <a class="button {{ $character->active ? 'active' : 'inactive' }}" href="/character/{{ $character->id }}">{{ $character->name }}</a>
-	@endforeach
-</div>
+
+	<div class="form-group row">
+        <div class="people">
+            @foreach ($characters as $character)
+            	<a class="{{ $character->active ? 'active' : 'inactive' }}" href="/character/{{ $character->id }}">{{ __($character->name) }}</a>
+            @endforeach
+        </div>
+    </div>
+    
 @endsection
