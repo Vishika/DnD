@@ -30,8 +30,7 @@
 
 Auth::routes();
 
-Route::get('/', 'PagesController@index');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
 
 Route::get('/registrable/create', 'RegistrableController@create');
 Route::post('/registrable', 'RegistrableController@store');
@@ -48,7 +47,7 @@ Route::get('/character/{character}', 'CharacterController@show');
 Route::post('/character', 'CharacterController@store');
 Route::patch('/character/{character}', 'CharacterController@update');
 
-Route::get('/session', 'SessionsController@index');
+Route::get('/sessions', 'SessionsController@index');
 
 
 

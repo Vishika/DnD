@@ -12,6 +12,6 @@ class SessionsController extends Controller
             'Session 3, April 21st'
         ];
         
-        return view('session')->withSessions($sessions);
+        return view('sessions.index', compact('sessions'));
     }
 }
