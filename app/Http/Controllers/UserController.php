@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('admin');
         $users = User::all();
         $registrables = Registrable::all();
         return view('user.index', ['users' => $users, 'registrables' => $registrables]);
@@ -29,6 +30,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $this->authorize('owner', $user);
         return view('user.show', compact('user'));
     }
 
@@ -40,6 +42,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('owner', $user);
         return view('user.edit', compact('user'));
     }
 
@@ -52,6 +55,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $this->authorize('owner', $user);
         $request->merge(array('active' => $request->filled('active')));
         $validated = request()->validate([
             'name' => ['required', 'string', 'min:3', 'max:12'],

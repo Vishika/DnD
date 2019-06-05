@@ -14,8 +14,14 @@ class CharacterController extends Controller
      */
     public function index()
     {
-        //$characters = Character::where('user_id', auth()->id())->get();
-        $characters = Character::all();
+        /*
+         * auth()->user()
+         * auth()->check()
+         * auth()->guest()
+         * auth()->id()
+         */
+        // TODO policy
+        $characters = Character::where('user_id', auth()->id())->get();
         return view('character.index', compact('characters'));
     }
 
@@ -27,6 +33,7 @@ class CharacterController extends Controller
      */
     public function show(Character $character)
     {
+        $this->authorize('owner', $character);
         return view('character.show', compact('character'));
     }
 
@@ -38,6 +45,7 @@ class CharacterController extends Controller
      */
     public function edit(Character $character)
     {
+        $this->authorize('owner', $character);
         return view('character.edit', compact('character'));
     }
 
@@ -50,6 +58,7 @@ class CharacterController extends Controller
      */
     public function update(Request $request, Character $character)
     {
+        $this->authorize('owner', $character);
         $request->merge(array('active' => $request->filled('active')));
         $validated = request()->validate([
             'name' => ['required', 'string', 'min:3', 'max:191'],
@@ -68,6 +77,7 @@ class CharacterController extends Controller
      */
     public function create(Request $request)
     {
+        $this->authorize('owner', $request->user_id);
         $user_id = $request->user_id;
         return view('character.create', compact('user_id'));
     }
@@ -80,7 +90,7 @@ class CharacterController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO logic to check for max character and right user
+        $this->authorize('owner', $request->user_id);
         $validated = request()->validate([
             'user_id' => ['required', 'integer'],
             'name' => ['required', 'string', 'min:3', 'max:191', 'unique:users'],

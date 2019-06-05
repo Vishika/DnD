@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('discord_name')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->enum('role', ['player', 'dm'])->default('player');
+            $table->enum('role', ['player', 'dm', 'admin'])->default('player');
             $table->boolean('active')->default(true);
             $table->string('password');
             $table->rememberToken();

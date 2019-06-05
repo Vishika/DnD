@@ -71,24 +71,31 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">{{ __('Dashboard') }}</a>
+            	@auth
+                	<a class="navbar-brand" href="{{ url('/') }}">{{ __('Dashboard') }}</a>
+                @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user">{{ __('Users') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/character">{{ __('Characters') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/sessions">{{ __('Sessions') }}</a>
-                        </li>
-                    </ul>
+                    @auth
+                        <ul class="navbar-nav mr-auto">
+                        	<li class="nav-item">
+                                <a class="nav-link" href="/user/{{ Auth::user()->id }}">{{ __('Profile') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user">{{ __('Users') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/character">{{ __('Characters') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/sessions">{{ __('Sessions') }}</a>
+                            </li>
+                        </ul>
+                    @endauth
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
