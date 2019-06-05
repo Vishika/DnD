@@ -43,10 +43,20 @@ class UserController extends Controller
     public function edit(Request $request, User $user)
     {
         $this->authorize('owner', $user);
-        if ($request->submit == "edit") {
-            return view('user.edit', compact('user'));
-        } else {
-            return view('user.edit-password', compact('user'));
+        $action = $request->input('submit');
+        if (empty($action))
+        {
+            $action = $request->old('submit');
+        }
+        switch ($action)
+        {
+            case 'edit':
+                return view('user.edit', compact('user'));
+                break;
+                
+            case 'edit-password':
+                return view('user.edit-password', compact('user'));
+                break;
         }
     }
 

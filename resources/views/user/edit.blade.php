@@ -5,6 +5,7 @@
 <form method="POST" action="/user/{{ $user->id }}">
 	@csrf
 	@method('PATCH')
+	<input type="hidden" name="submit" value="edit">
 	
 	 <div class="form-group row">
         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
