@@ -73,7 +73,7 @@ class UserController extends Controller
         $request->merge(array('active' => $request->filled('active')));
         $validated = request()->validate([
             'name' => ['required', 'string', 'min:3', 'max:12'],
-            'email' => ['required', 'string', 'email', 'max:191'],
+            'email' => ['nullable', 'string', 'email', 'max:191'],
             'active' => ['boolean'],
         ]);
         $user->update($validated);
