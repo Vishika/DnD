@@ -40,10 +40,14 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Request $request, User $user)
     {
         $this->authorize('owner', $user);
-        return view('user.edit', compact('user'));
+        if ($request->submit == "edit") {
+            return view('user.edit', compact('user'));
+        } else {
+            return view('user.edit-password', compact('user'));
+        }
     }
 
     /**
@@ -60,8 +64,24 @@ class UserController extends Controller
         $validated = request()->validate([
             'name' => ['required', 'string', 'min:3', 'max:12'],
             'email' => ['required', 'string', 'email', 'max:191'],
-            'password' => ['required', 'string', 'min:8', 'max:191', 'confirmed'],
             'active' => ['boolean'],
+        ]);
+        $user->update($validated);
+        return redirect("/user/$user->id");
+    }
+    
+    /**
+     * Update the specified password in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(Request $request, User $user)
+    {
+        $this->authorize('owner', $user);
+        $validated = request()->validate([
+            'password' => ['required', 'string', 'min:8', 'max:191', 'confirmed'],
         ]);
         $validated['password'] = Hash::make($validated['password']);
         $user->update($validated);

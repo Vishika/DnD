@@ -38,6 +38,7 @@ Route::post('/registrable', 'RegistrableController@store');
 Route::get('/user', 'UserController@index');
 Route::get('/user/{user}', 'UserController@show');
 Route::get('/user/{user}/edit', 'UserController@edit');
+Route::patch('/user/{user}/password', 'UserController@updatePassword');
 Route::patch('/user/{user}', 'UserController@update');
 
 Route::get('/character', 'CharacterController@index');

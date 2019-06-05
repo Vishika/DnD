@@ -28,7 +28,8 @@
             <form method="POST" action="/user/{{ $user->id }}/edit">
                 @csrf
                 @method('GET')
-                <button type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
+                <button type="submit" name="submit" value="edit" class="btn btn-primary">{{ __('Edit') }}</button>
+                <button type="submit" name="submit" value="edit-password" class="btn btn-primary">{{ __('Change Password') }}</button>
         	</form>
         </div>
     </div>

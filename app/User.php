@@ -52,4 +52,9 @@ class User extends Authenticatable
     public function isPlayer() {
         return $this->role == 'player';
     }
+    
+    public function isOwner(User $model)
+    {
+        return $this->id == $model->id;
+    }
 }

@@ -29,6 +29,6 @@ class UserPolicy
      */
     public function owner(User $user, User $model)
     {
-        return $user->id == $model->id;
+        return $user->isOwner($model);
     }
 }
