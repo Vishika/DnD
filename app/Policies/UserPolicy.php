@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function admin(User $user)
     {
-        return $user->role == 'admin';
+        return $user->isAdmin();
     }
 
     /**

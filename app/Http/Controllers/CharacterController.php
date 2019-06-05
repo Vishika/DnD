@@ -20,8 +20,11 @@ class CharacterController extends Controller
          * auth()->guest()
          * auth()->id()
          */
-        // TODO policy
-        $characters = Character::where('user_id', auth()->id())->get();
+        if (auth()->user()->isPlayer()) {
+            $characters = Character::where('user_id', auth()->id())->get();
+        } else {
+            $characters = Character::all();
+        }
         return view('character.index', compact('characters'));
     }
 

@@ -40,4 +40,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Character::class);
     }
+    
+    public function isAdmin() {
+        return $this->role == 'admin';
+    }
+    
+    public function isDm() {
+        return $this->role == 'dm';
+    }
+    
+    public function isPlayer() {
+        return $this->role == 'player';
+    }
 }

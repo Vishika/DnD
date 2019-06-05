@@ -85,9 +85,11 @@
                         	<li class="nav-item">
                                 <a class="nav-link" href="/user/{{ Auth::user()->id }}">{{ __('Profile') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/user">{{ __('Users') }}</a>
-                            </li>
+                            @if (Auth::user()->isAdmin() || Auth::user()->isDm())
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user">{{ __('Users') }}</a>
+                                </li>
+                            @endif
                             <li class="nav-item">
                                 <a class="nav-link" href="/character">{{ __('Characters') }}</a>
                             </li>
