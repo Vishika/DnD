@@ -25,8 +25,9 @@
     
     <div class="form-group row">
         <div class="col-md-6 offset-md-4">
-            <form method="GET" action="/user/{{ $user->id }}/edit">
+            <form method="POST" action="/user/{{ $user->id }}/edit">
                 @csrf
+                @method('GET')
                 <button type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
         	</form>
         </div>
@@ -46,6 +47,7 @@
     <div class="form-group row mb-0">
         <div class="col-md-6 offset-md-4">
             <form method="POST" action="/character/create">
+            	@csrf
         		@method('GET')
         		<input type="hidden" name="user_id" value="{{ $user->id }}">
                 <button type="submit" class="btn btn-primary">{{ __('New Char') }}</button>

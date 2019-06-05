@@ -15,8 +15,9 @@
     
     <div class="form-group row">
         <div class="col-md-6">
-            <form method="GET" action="/registrable/create">
+            <form method="POST" action="/registrable/create">
                 @csrf
+        		@method('GET')
                 <button type="submit" class="btn btn-primary">{{ __('Register Discord User') }}</button>
         	</form>
         </div>
