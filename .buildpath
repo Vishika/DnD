@@ -116,6 +116,11 @@
 			<attribute name="composer" value="vendor"/>
 		</attributes>
 	</buildpathentry>
+	<buildpathentry kind="src" path="vendor/laravel/telescope/src">
+		<attributes>
+			<attribute name="composer" value="vendor"/>
+		</attributes>
+	</buildpathentry>
 	<buildpathentry kind="src" path="vendor/laravel/tinker/src">
 		<attributes>
 			<attribute name="composer" value="vendor"/>
@@ -132,6 +137,11 @@
 		</attributes>
 	</buildpathentry>
 	<buildpathentry kind="src" path="vendor/monolog/monolog/src/Monolog">
+		<attributes>
+			<attribute name="composer" value="vendor"/>
+		</attributes>
+	</buildpathentry>
+	<buildpathentry kind="src" path="vendor/moontoast/math/src/Moontoast/Math">
 		<attributes>
 			<attribute name="composer" value="vendor"/>
 		</attributes>
