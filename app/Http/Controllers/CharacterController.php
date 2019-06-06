@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Character;
 use Illuminate\Http\Request;
+use App\User;
 
 class CharacterController extends Controller
 {
@@ -14,16 +15,29 @@ class CharacterController extends Controller
      */
     public function index()
     {
-        /*
-         * auth()->user()
-         * auth()->check()
-         * auth()->guest()
-         * auth()->id()
-         */
-        if (auth()->user()->isPlayer()) {
+        if (auth()->user()->isPlayer())
+        {
             $characters = Character::where('user_id', auth()->id())->get();
-        } else {
-            $characters = Character::all();
+        }
+        else
+        {
+            $users = User::all(['id', 'active']);
+            foreach ($users as $user)
+            {
+                $characters = Character::where('user_id', $user->id)->get();
+                foreach ($characters as $character)
+                {
+                    // if the user isn't active neither are their characters
+                    $active = ($user->active) ? $character->active : false;
+                    $sanitized_character = [
+                        'id' => $character->id,
+                        'name' => $character->name,
+                        'active' => $active,
+                    ];
+                    $sanitized_characters[] = $sanitized_character;
+                }
+            }
+            $characters = $sanitized_characters;
         }
         return view('character.index', compact('characters'));
     }

@@ -57,7 +57,7 @@ class User extends Authenticatable
     {
         return $this->id == $model->id;
     }
-    
+
     /**
      * This function returns whether the user is elligible to create or activate more characters.
      * 

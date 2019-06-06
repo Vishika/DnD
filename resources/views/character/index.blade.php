@@ -5,7 +5,7 @@
 	<div class="form-group row">
         <div class="people">
             @foreach ($characters as $character)
-            	<a class="{{ $character->active ? 'active' : 'inactive' }}" href="/character/{{ $character->id }}">{{ __($character->name) }}</a>
+            	<a class="{{ $character['active'] ? 'active' : 'inactive' }}" href="/character/{{ $character['id'] }}">{{ __($character['name']) }}</a>
             @endforeach
         </div>
     </div>
