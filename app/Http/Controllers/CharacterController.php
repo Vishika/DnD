@@ -62,13 +62,21 @@ class CharacterController extends Controller
     public function update(Request $request, Character $character)
     {
         $this->authorize('owner', $character);
-        $request->merge(array('active' => $request->filled('active')));
-        $validated = request()->validate([
-            'name' => ['required', 'string', 'min:3', 'max:191'],
-            'race' => ['required', 'string', 'min:3', 'max:191'],
-            'class' => ['required', 'string', 'min:3', 'max:191'],
-            'active' => ['boolean'],
-        ]);
+        if (auth()->user()->isPlayer()) {
+            $validated = request()->validate([
+                'name' => ['required', 'string', 'min:3', 'max:191'],
+                'race' => ['required', 'string', 'min:3', 'max:191'],
+                'class' => ['required', 'string', 'min:3', 'max:191'],
+            ]);
+        } else {
+            $request->merge(array('active' => $request->filled('active')));
+            $validated = request()->validate([
+                'name' => ['required', 'string', 'min:3', 'max:191'],
+                'race' => ['required', 'string', 'min:3', 'max:191'],
+                'class' => ['required', 'string', 'min:3', 'max:191'],
+                'active' => ['boolean'],
+            ]);
+        }
         $character->update($validated);
         return redirect('/character/' . $character->id);
     }
@@ -80,7 +88,7 @@ class CharacterController extends Controller
      */
     public function create(Request $request)
     {
-        $this->authorize('owner', $request->user_id);
+        abort_unless($this->can_create($request->user_id), 403);
         $user_id = $request->user_id;
         return view('character.create', compact('user_id'));
     }
@@ -93,7 +101,7 @@ class CharacterController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('owner', $request->user_id);
+        abort_unless($this->can_create($request->user_id), 403);
         $validated = request()->validate([
             'user_id' => ['required', 'integer'],
             'name' => ['required', 'string', 'min:3', 'max:191', 'unique:users'],
@@ -102,5 +110,18 @@ class CharacterController extends Controller
         ]);
         Character::create($validated);
         return redirect("/user/" . request()->user_id);
+    }
+    
+    /**
+     * For some reason character policies weren't working. This is a work around.
+     * 
+     * @param String $user_id
+     * @return boolean
+     */
+    private function can_create($user_id) {
+        $user = auth()->user();
+        $user_is_owner = $user->id == $user_id;
+        $user_has_not_reached_character_max = !$user->reachedCharacterLimit();
+        return $user->isAdmin() || ($user_is_owner && $user_has_not_reached_character_max);
     }
 }

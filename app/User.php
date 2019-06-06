@@ -57,4 +57,45 @@ class User extends Authenticatable
     {
         return $this->id == $model->id;
     }
+    
+    /**
+     * This function returns whether the user is elligible to create or activate more characters.
+     * 
+     * @return boolean
+     */
+    public function reachedCharacterLimit()
+    {
+        $characters = $this->characters;
+        $max_character_level = 0;
+        $active_characters = 0;
+        $max_allowed_characters = 1;
+        foreach ($characters as $character)
+        {
+            if ($character['level'] > $max_character_level)
+            {
+                $max_character_level = $character['level'];
+            }
+            if ($character['level'] == 20)
+            {
+                $max_allowed_characters++;
+            }
+            if ($character['active'])
+            {
+                $active_characters++;
+            }
+        }
+        if ($max_character_level >= 5)
+        {
+            $max_allowed_characters++;
+        }
+        if ($max_character_level >= 11)
+        {
+            $max_allowed_characters++;
+        }
+        if ($max_character_level >= 17)
+        {
+            $max_allowed_characters++;
+        }
+        return $active_characters >= $max_allowed_characters;
+    }
 }
