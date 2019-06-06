@@ -17,27 +17,19 @@ class CharacterController extends Controller
     {
         if (auth()->user()->isPlayer())
         {
-            $characters = Character::where('user_id', auth()->id())->get();
+            $characters = auth()->user()->characters;
         }
         else
         {
-            $users = User::all(['id', 'active']);
-            foreach ($users as $user)
+            foreach (User::all() as $user)
             {
-                $characters = Character::where('user_id', $user->id)->get();
-                foreach ($characters as $character)
+                foreach ($user->characters as $character)
                 {
-                    // if the user isn't active neither are their characters
-                    $active = ($user->active) ? $character->active : false;
-                    $sanitized_character = [
-                        'id' => $character->id,
-                        'name' => $character->name,
-                        'active' => $active,
-                    ];
-                    $sanitized_characters[] = $sanitized_character;
+                    // show characters as inactive, if their user is inactive
+                    $character->active = ($user->active) ? $character->active : false;
+                    $characters[] = $character;
                 }
             }
-            $characters = $sanitized_characters;
         }
         return view('character.index', compact('characters'));
     }
