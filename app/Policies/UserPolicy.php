@@ -15,9 +15,9 @@ class UserPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function admin(User $user)
+    public function dm(User $user)
     {
-        return $user->isAdmin();
+        return $user->isDm();
     }
 
     /**

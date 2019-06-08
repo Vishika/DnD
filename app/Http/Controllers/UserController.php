@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('admin');
+        $this->authorize('dm', auth()->user());
         $users = User::all();
         $registrables = Registrable::all();
         return view('user.index', ['users' => $users, 'registrables' => $registrables]);
