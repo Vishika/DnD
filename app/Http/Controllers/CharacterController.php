@@ -15,6 +15,7 @@ class CharacterController extends Controller
      */
     public function index(User $user)
     {
+        $this->authorize('owner', $user);
         if ($user->isPlayer())
         {
             $characters = auth()->user()->characters;
@@ -42,7 +43,7 @@ class CharacterController extends Controller
      */
     public function show(User $user, Character $character)
     {
-        $this->authorize('owner', $user, $character);
+        $this->authorize('owner', $user);
         return view('character.show', compact('character'));
     }
 
@@ -54,7 +55,7 @@ class CharacterController extends Controller
      */
     public function edit(User $user, Character $character)
     {
-        $this->authorize('owner', $user, $character);
+        $this->authorize('owner', $user);
         return view('character.edit', compact('character'));
     }
 
@@ -67,7 +68,7 @@ class CharacterController extends Controller
      */
     public function update(User $user, Character $character, Request $request)
     {
-        $this->authorize('owner', $user, $character);
+        $this->authorize('owner', $user);
         if (auth()->user()->isPlayer()) {
             $validated = request()->validate($this->validateCharacter('update'));
         }
