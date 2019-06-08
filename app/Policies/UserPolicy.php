@@ -31,4 +31,18 @@ class UserPolicy
     {
         return $user->isOwner($model);
     }
+    
+    /**
+     * Determine whether a user can create a character.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Character  $character
+     * @return mixed
+     */
+    public function create(User $user, User $model)
+    {
+        $user_is_owner = $user->id == $model->id;
+        $user_has_not_reached_character_max = !$user->reachedCharacterLimit();
+        return $user->isAdmin() || ($user_is_owner && $user_has_not_reached_character_max);
+    }
 }

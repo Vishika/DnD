@@ -2,10 +2,8 @@
 @section('header', 'Create Character')
 @section('content')
 
-	<form method="POST" action="/character">
+	<form method="POST" action="/user/{{ $user->id }}/character">
         @csrf
-        
-        <input type="hidden" name="user_id" value="{{ $user_id }}">
     
         <div class="form-group row">
             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>

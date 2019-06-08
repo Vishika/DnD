@@ -91,7 +91,7 @@
                                 </li>
                             @endif
                             <li class="nav-item">
-                                <a class="nav-link" href="/character">{{ __('Characters') }}</a>
+                                <a class="nav-link" href="/user/{{ Auth::user()->id }}/character">{{ __('Characters') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/sessions">{{ __('Sessions') }}</a>

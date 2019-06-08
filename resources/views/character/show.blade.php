@@ -46,7 +46,7 @@
     
 	<div class="form-group row">
         <div class="col-md-6 offset-md-4">
-            <form method="POST" action="/character/{{ $character->id }}/edit">
+            <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/edit">
             	@csrf
             	@method('GET')
                 <button type="submit" class="btn btn-primary">{{ __('Edit') }}</button>

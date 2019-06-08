@@ -13,9 +13,9 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        if (auth()->user()->isPlayer())
+        if ($user->isPlayer())
         {
             $characters = auth()->user()->characters;
         }
@@ -40,9 +40,9 @@ class CharacterController extends Controller
      * @param  \App\Character  $character
      * @return \Illuminate\Http\Response
      */
-    public function show(Character $character)
+    public function show(User $user, Character $character)
     {
-        $this->authorize('owner', $character);
+        $this->authorize('owner', $user, $character);
         return view('character.show', compact('character'));
     }
 
@@ -52,9 +52,9 @@ class CharacterController extends Controller
      * @param  \App\Character  $character
      * @return \Illuminate\Http\Response
      */
-    public function edit(Character $character)
+    public function edit(User $user, Character $character)
     {
-        $this->authorize('owner', $character);
+        $this->authorize('owner', $user, $character);
         return view('character.edit', compact('character'));
     }
 
@@ -65,26 +65,18 @@ class CharacterController extends Controller
      * @param  \App\Character  $character
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Character $character)
+    public function update(User $user, Character $character, Request $request)
     {
-        $this->authorize('owner', $character);
+        $this->authorize('owner', $user, $character);
         if (auth()->user()->isPlayer()) {
-            $validated = request()->validate([
-                'name' => ['required', 'string', 'min:3', 'max:191'],
-                'race' => ['required', 'string', 'min:3', 'max:191'],
-                'class' => ['required', 'string', 'min:3', 'max:191'],
-            ]);
-        } else {
+            $validated = request()->validate($this->validateCharacter('update'));
+        }
+        else {
             $request->merge(array('active' => $request->filled('active')));
-            $validated = request()->validate([
-                'name' => ['required', 'string', 'min:3', 'max:191'],
-                'race' => ['required', 'string', 'min:3', 'max:191'],
-                'class' => ['required', 'string', 'min:3', 'max:191'],
-                'active' => ['boolean'],
-            ]);
+            $validated = request()->validate($this->validateCharacter('dm-update'));
         }
         $character->update($validated);
-        return redirect('/character/' . $character->id);
+        return redirect('/user/' . $user->id . '/character/' . $character->id);
     }
     
     /**
@@ -92,11 +84,10 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(User $user, Character $character, Request $request)
     {
-        abort_unless($this->can_create($request->user_id), 403);
-        $user_id = $request->user_id;
-        return view('character.create', compact('user_id'));
+        $this->authorize('create', $user);
+        return view('character.create', compact('user'));
     }
     
     /**
@@ -105,29 +96,41 @@ class CharacterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(User $user, Character $character, Request $request)
     {
-        abort_unless($this->can_create($request->user_id), 403);
-        $validated = request()->validate([
-            'user_id' => ['required', 'integer'],
-            'name' => ['required', 'string', 'min:3', 'max:191', 'unique:users'],
-            'race' => ['required', 'string', 'min:3', 'max:191'],
-            'class' => ['required', 'string', 'min:3', 'max:191'],
-        ]);
+        $this->authorize('create', $user);
+        $request->merge(array('user_id' => $user->id));
+        $validated = request()->validate($this->validateCharacter('create'));
         Character::create($validated);
-        return redirect("/user/" . request()->user_id);
+        return redirect('/user/' . $user->id);
     }
     
     /**
-     * For some reason character policies weren't working. This is a work around.
-     * 
-     * @param String $user_id
-     * @return boolean
+     * Gets validator settings.
      */
-    private function can_create($user_id) {
-        $user = auth()->user();
-        $user_is_owner = $user->id == $user_id;
-        $user_has_not_reached_character_max = !$user->reachedCharacterLimit();
-        return $user->isAdmin() || ($user_is_owner && $user_has_not_reached_character_max);
+    private function validateCharacter($method)
+    {
+        $validation = [
+            'name' => ['required', 'alpha_dash', 'min:3', 'max:191'],
+            'race' => ['required', 'alpha_dash', 'min:3', 'max:191'],
+            'class' => ['required', 'alpha_dash', 'min:3', 'max:191'],
+        ];
+        switch ($method)
+        {
+            case 'create':
+                $validation['user_id'] = ['required', 'integer'];
+                $validation['name'] = ['required', 'alpha_dash', 'min:3', 'max:191', 'unique:characters'];
+                return $validation;
+                break;
+
+            case 'dm-update':
+                $validation['active'] = ['boolean'];
+                return $validation;
+                break;
+
+            case 'update':
+                return $validation;
+                break;
+        }
     }
 }

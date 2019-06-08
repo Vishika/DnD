@@ -39,7 +39,7 @@
     		<label class="col-md-4 col-form-person-label text-md-right">{{ __('Characters') }}</label>
             <div class="col-md-6 people">
             @foreach ($user->characters as $character)
-            	<a class="{{ $character->active ? 'active' : 'inactive' }}" href="/character/{{ $character->id }}">{{ __($character->name) }}</a>
+            	<a class="{{ $character->active ? 'active' : 'inactive' }}" href="/user/{{ $user->id }}/character/{{ $character->id }}">{{ __($character->name) }}</a>
             @endforeach
             </div>
         </div>
@@ -48,10 +48,9 @@
     @if (!$user->reachedCharacterLimit())
     	<div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
-                <form method="POST" action="/character/create">
+                <form method="POST" action="/user/{{ $user->id }}/character/create">
                 	@csrf
             		@method('GET')
-            		<input type="hidden" name="user_id" value="{{ $user->id }}">
                     <button type="submit" class="btn btn-primary">{{ __('New Character') }}</button>
             	</form>
             </div>

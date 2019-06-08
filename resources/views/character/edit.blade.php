@@ -2,7 +2,7 @@
 @section('header', 'Edit Character')
 @section('content')
 
-    <form method="POST" action="/character/{{ $character->id }}">
+    <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}">
     	@csrf
     	@method('PATCH')
     	
