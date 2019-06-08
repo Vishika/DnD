@@ -44,8 +44,8 @@
             </div>
         </div>
     @endif
-    
-    @if (!$user->reachedCharacterLimit())
+
+    @if (Auth::user()->isAdmin() || !$user->reachedCharacterLimit())
     	<div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
                 <form method="POST" action="/user/{{ $user->id }}/character/create">
