@@ -43,6 +43,6 @@ class UserPolicy
     {
         $user_is_owner = $user->id == $model->id;
         $user_has_not_reached_character_max = !$user->reachedCharacterLimit();
-        return $user->isAdmin() || ($user_is_owner && $user_has_not_reached_character_max);
+        return $user_is_owner && $user_has_not_reached_character_max;
     }
 }
