@@ -84,7 +84,7 @@ class SessionController extends Controller
             'user_id' => ['required', 'integer'],
             'duration' => ['required', 'integer', 'min:1', 'max:12'],
             'difficulty' => ['required', 'in:easy,medium,role play,hard,deadly'],
-            'encounters' => ['required', 'integer', 'min:1', 'max:12'],
+            'encounters' => ['required', 'integer', 'min:0', 'max:12'],
             'note' => ['nullable', 'string', 'max:191'],
         ]);
         $session = Session::create($validated);

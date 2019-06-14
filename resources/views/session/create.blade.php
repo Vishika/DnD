@@ -91,7 +91,7 @@
             <label for="encounters" class="col-md-4 col-form-label text-md-right">{{ __('Encounters (fights)') }}</label>
     
             <div class="col-md-6">
-                <input id="encounters" type="number" step="1" min="1" max="12" class="form-control @error('encounters') is-invalid @enderror" name="encounters" value="{{ empty(old('encounters')) ? 3 : old('encounters') }}" required>
+                <input id="encounters" type="number" step="1" min="0" max="12" class="form-control @error('encounters') is-invalid @enderror" name="encounters" value="{{ empty(old('encounters')) ? 3 : old('encounters') }}" required>
     
                 @error('encounters')
                     <span class="invalid-feedback" role="alert">
@@ -114,12 +114,32 @@
                 @enderror
             </div>
         </div>
+
+		 @if (Auth::user()->isAdmin())
+            <div class="form-group row">
+                <label for="xp" class="col-md-4 col-form-label text-md-right">{{ __('Experience (override)') }}</label>
+        
+                <div class="col-md-6">
+                    <input id="xp" type="number" class="form-control" onchange="updateXp()">
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="gp" class="col-md-4 col-form-label text-md-right">{{ __('Gold (override)') }}</label>
+        
+                <div class="col-md-6">
+                    <input id="gp" type="number" class="form-control" onchange="updateGp()">
+                </div>
+            </div>
+        @endif
+        
         
         <div class="overflow">
             <table id="charactersTable" class="table fillable" ondrop="dropInTable(event)" ondragover="allowDrop(event)">
                 <thead>
                     <tr>
                     	<th>Character</th>
+                    	<th>LvL</th>
                         <th>Hours</th>
                         <th>Hazard</th>
                         <th>Fights</th>
@@ -133,11 +153,20 @@
             </table>
         </div>
         
+        <div id="info">
+            <p>Drag active characters into the table above.</p>
+            <p>Players should be rewarded by the number of encounters they completed.</p>
+            <p>When determining the difficulty try to approximate the average</p>
+            <p>An RP encounter should take roughly a half hour</p>
+        </div>
+        
         @if (!empty($characters))
             <div class="form-group row" ondrop="dropInList(event)" ondragover="allowDrop(event)">
                 <div id="charactersList" class="people">
                     @foreach ($characters as $character)
-                    	<a class="active" id="character-{{ $character['id'] }}" href="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}" draggable="true" ondragstart="drag(event)" userId="{{ $character['user_id'] }}" characterId="{{ $character['id'] }}" level="{{ $character['level'] }}">{{ __($character['name']) }}</a>
+                    	@if ($character->active)
+                    		<a class="active" id="character-{{ $character['id'] }}" href="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}" draggable="true" ondragstart="drag(event)" userId="{{ $character['user_id'] }}" characterId="{{ $character['id'] }}" level="{{ $character['level'] }}">{{ __($character['name']) }}</a>
+                    	@endif
                     @endforeach
                 </div>
             </div>
@@ -158,6 +187,18 @@
         function drag(event) {
         	event.dataTransfer.setData("text", event.target.id);
         }
+
+        @if (Auth::user()->isAdmin())
+            function updateXp() {
+                var xp = $('#xp').val();
+            	$( "input[name^='character_experience']" ).val( xp );
+            }
+    
+            function updateGp() {
+            	var gp = $('#gp').val();
+            	$( "input[name^='character_gold']" ).val( gp );
+            }
+        @endif
         
         function dropInList(event) {
         	event.preventDefault();
@@ -178,6 +219,8 @@
 
         function dropInTable(event) {
         	event.preventDefault();
+        	// hide the info
+        	document.getElementById('info').style.display = 'none';
             var character = event.dataTransfer.getData('text');
             var charactersTable = document.getElementById('charactersTable');
             var rowCount = charactersTable.rows.length;
@@ -193,6 +236,7 @@
             	document.getElementById(character).classList.add('dm');
             }
             var characterId = nodes[0].getAttribute('characterId');
+            var characterLevel = nodes[0].getAttribute('level');
             var rowId = 'row-character-' + characterId;
             tr.setAttribute('id', rowId);
          	// add hidden fields
@@ -200,10 +244,15 @@
 			hidden.appendTo(td);
 			var hidden = $('<input />', {name: 'character_user_id[' + characterId + ']', type: 'hidden', value: userId});
 			hidden.appendTo(td);
+			// insert the level
+			var td = $('<td />');
+            var input = $('<div />', {class: 'form-control', text: characterLevel});
+            input.appendTo(td);
+            td.appendTo(tr);
             // insert the duration input
             var defaultValue = $('#duration').val();
             var td = $('<td />');
-            var input = $('<input />', {name: 'character_duration[' + characterId + ']', class: 'form-control', type: 'number', step: '1', min: '1', max: '12', required: 'true', value: $('#duration').val()});
+            var input = $('<input />', {name: 'character_duration[' + characterId + ']', class: 'form-control', type: 'number', step: '1', min: '0', max: '12', required: 'true', value: $('#duration').val()});
             input.appendTo(td);
             td.appendTo(tr);
             // insert what the difficulty input
@@ -229,7 +278,7 @@
          	// insert the encounters input
             var defaultValue = $('#encounters').val();
             var td = $('<td />');
-            var input = $('<input />', {name: 'character_encounters[' + characterId + ']', class: 'form-control', type: 'number', step: '1', min: '1', max: '12', required: 'true', value: $('#encounters').val(), onchange: 'updateXpGp(\'' + rowId + '\')'});
+            var input = $('<input />', {name: 'character_encounters[' + characterId + ']', class: 'form-control', type: 'number', step: '1', min: '0', max: '12', required: 'true', value: $('#encounters').val(), onchange: 'updateXpGp(\'' + rowId + '\')'});
             input.appendTo(td);
             td.appendTo(tr);
          	// insert the experience input
@@ -255,14 +304,14 @@
 			// get the character element
 			var characterRow = document.getElementById(rowId);
 			var level = characterRow.firstChild.firstChild.getAttribute('level');
-			var difficulty = characterRow.children[2].firstChild.value;
-			var encounters = characterRow.children[3].firstChild.value;
+			var difficulty = characterRow.children[3].firstChild.value;
+			var encounters = characterRow.children[4].firstChild.value;
 			var difficultyLevelModifier = {'role play': -1, 'easy': -1, 'medium': 0, 'hard': 1, 'deadly': 2};
 			var modifiedLevel = +level + difficultyLevelModifier[difficulty];
 			var gp = +modifiedLevel * +modifiedLevel * 12;
 			var xp = {0 : 0, 1 : 50, 2 : 113, 3 : 175, 4 : 275, 5 : 450, 6 : 575, 7 : 725, 8 : 975, 9 : 1250, 10 : 1475, 11 : 1800, 12 : 2100, 13 : 2500, 14 : 2875, 15 : 3250, 16 : 3750, 17 : 4500, 18 : 5000, 19 : 5500, 20 : 6250};
-			characterRow.children[4].firstChild.value = xp[modifiedLevel] * +encounters;
-			characterRow.children[5].firstChild.value = gp * encounters;
+			characterRow.children[5].firstChild.value = xp[modifiedLevel] * +encounters;
+			characterRow.children[6].firstChild.value = gp * encounters;
 		}
     </script>
     

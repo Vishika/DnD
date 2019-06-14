@@ -112,7 +112,7 @@ class CharacterController extends Controller
     private function validateCharacter($method)
     {
         $validation = [
-            'name' => ['required', 'alpha_dash', 'min:3', 'max:191'],
+            'name' => ['required', 'min:3', 'max:191', 'regex:/^[\pL\s\-]+$/u'],
             'race' => ['required', 'alpha_dash', 'min:3', 'max:191'],
             'class' => ['required', 'alpha_dash', 'min:3', 'max:191'],
         ];
@@ -120,7 +120,7 @@ class CharacterController extends Controller
         {
             case 'create':
                 $validation['user_id'] = ['required', 'integer'];
-                $validation['name'] = ['required', 'alpha_dash', 'min:3', 'max:191', 'unique:characters'];
+                $validation['name'] = ['required', 'min:3', 'max:191', 'regex:/^[\pL\s\-]+$/u', 'unique:characters'];
                 return $validation;
                 break;
 

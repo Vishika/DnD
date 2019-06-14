@@ -37,7 +37,7 @@
     				<tr>
     					<td colspan="5">
         					@foreach ($session->sessionCharacters as $sc)
-                            	<a class="{{ $sc->dm ? 'active dm' : ($sc->character->active ? 'active' : 'inactive') }}" href="/user/{{ $sc->character->user_id }}/character/{{ $sc->character->id }}">{{ __($sc->character->name) }}</a>
+                            	<a title="{{ $sc->note }}" class="{{ $sc->dm ? 'active dm' : ($sc->character->active ? 'active' : 'inactive') }}" href="/user/{{ $sc->character->user_id }}/character/{{ $sc->character->id }}">{{ __($sc->character->name) }}</a>
     						@endforeach
 						</td>
     				</tr>
