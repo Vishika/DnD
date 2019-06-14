@@ -41,6 +41,11 @@ class User extends Authenticatable
         return $this->hasMany(Character::class);
     }
     
+    public function sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
+    
     public function isAdmin() {
         return $this->role == 'admin';
     }

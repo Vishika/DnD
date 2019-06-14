@@ -31,4 +31,6 @@ Route::get('/user/{user}/character/{character}', 'CharacterController@show');
 Route::post('/user/{user}/character', 'CharacterController@store');
 Route::patch('/user/{user}/character/{character}', 'CharacterController@update');
 
-Route::get('/sessions', 'SessionsController@index');
+Route::get('/session', 'SessionController@index');
+Route::get('/session/create', 'SessionController@create');
+Route::post('/session', 'SessionController@store');

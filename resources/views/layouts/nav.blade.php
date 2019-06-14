@@ -50,6 +50,9 @@
         .registrable {
             background-color: #e3342f;
         }
+        .dm {
+            background-color: #9561e2;
+        }
         .people {
             display: block;
             padding: .375rem .75rem;
@@ -60,6 +63,41 @@
         }
         [readonly] {
             cursor: default;
+        }
+        table.table {
+            border-radius: .25rem;
+            -moz-border-radius: .25rem;
+            -webkit-border-radius: .25rem;
+            border:solid #cccccc 1px;
+        }
+        .table thead th {
+            border-bottom: none;
+        }
+        .table td, .table th {
+            border-top: none;
+        }
+        table.fillable td {
+            padding: 0.2rem;
+        }
+        tr:nth-child(odd) td {
+            background: #cccccc;
+        }
+        td, th {
+            border-left: none;
+            border-top: none;
+        }
+        table.fillable td a.active {
+            margin: 0;
+        }
+        .overflow {
+            overflow-x:auto;
+        }
+        .shorten {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
         }
     -->
     </style>
@@ -94,7 +132,7 @@
                                 <a class="nav-link" href="/user/{{ Auth::user()->id }}/character">{{ __('Characters') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/sessions">{{ __('Sessions') }}</a>
+                                <a class="nav-link" href="/session">{{ __('Sessions') }}</a>
                             </li>
                         </ul>
                     @endauth
