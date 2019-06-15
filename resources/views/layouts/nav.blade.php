@@ -23,6 +23,9 @@
     
     <style type="text/css">
     <!--
+        ul:not([.navbar-nav]) {
+            margin-top: 1rem;
+        }
         .btn {
             margin: .25rem;
         }

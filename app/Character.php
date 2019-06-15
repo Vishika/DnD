@@ -55,10 +55,32 @@ class Character extends Model
         return $this->hasMany(SessionCharacter::class);
     }
     
+    public function contributions()
+    {
+        return $this->hasMany(Contribution::class);
+    }
+    
     public function addSession($experience, $gold)
     {
         $this->attributes['experience'] += $experience;
         $this->attributes['gold'] += $gold;
+        $this->updateLevel();
+    }
+    
+    public function spend($amount)
+    {
+        $this->attributes['gold'] -= $amount;
+    }
+    
+    public function spendToGainExperience($amount)
+    {
+        $this->attributes['gold'] -= $amount;
+        $this->attributes['experience'] += $amount;
+        $this->updateLevel();
+    }
+    
+    private function updateLevel()
+    {
         foreach (self::$levels as $level => $xpThreshold)
         {
             if ($this->attributes['experience'] >= $xpThreshold)

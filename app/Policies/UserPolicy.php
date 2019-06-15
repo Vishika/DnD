@@ -2,8 +2,10 @@
 
 namespace App\Policies;
 
+use App\Feature;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\DB;
 
 class UserPolicy
 {
@@ -44,5 +46,19 @@ class UserPolicy
         $user_is_owner = $user->id == $model->id;
         $user_has_not_reached_character_max = !$user->reachedCharacterLimit();
         return $user_is_owner && $user_has_not_reached_character_max;
+    }
+    
+    /**
+     * Determine whether a user can contribute.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Character  $character
+     * @return mixed
+     */
+    public function contribute(User $user, User $model)
+    {
+        $user_is_owner = $user->isOwner($model);
+        $contritbutions = DB::table('features')->where('name', '=', 'contributions')->where('active', '=', 1)->get();
+        return $user_is_owner && $contritbutions->isNotEmpty();
     }
 }

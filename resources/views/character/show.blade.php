@@ -53,5 +53,17 @@
         	</form>
         </div>
     </div>
+    
+    @can('contribute', $user)
+        <div class="form-group row">
+            <div class="col-md-6 offset-md-4">
+                <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/contribute">
+                	@csrf
+                	@method('GET')
+                    <button type="submit" class="btn btn-primary">{{ __('Contribute') }}</button>
+            	</form>
+            </div>
+        </div>
+    @endcan
         
 @endsection
