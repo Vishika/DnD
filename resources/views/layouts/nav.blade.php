@@ -23,6 +23,16 @@
     
     <style type="text/css">
     <!--
+        .btn {
+            margin: .25rem;
+        }
+        a:not([href]).active {
+            color: #ffffff;
+        }
+        a:not([href]).active:hover {
+            background-color: #6574cd;
+            color: #ffffff;
+        }
         .active, .inactive, .registrable {
             border-radius: .25rem;
             border: 1px solid transparent;

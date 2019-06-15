@@ -37,7 +37,9 @@
     				<tr>
     					<td colspan="5">
         					@foreach ($session->sessionCharacters as $sc)
-                            	<a title="{{ $sc->note }}" class="{{ $sc->dm ? 'active dm' : ($sc->character->active ? 'active' : 'inactive') }}" href="/user/{{ $sc->character->user_id }}/character/{{ $sc->character->id }}">{{ __($sc->character->name) }}</a>
+        						@if ((Auth::user()->isAdmin() || Auth::user()->isDm()) || (!$sc->dm))
+        							<a title="{{ $sc->note }}" class="{{ $sc->dm ? 'active dm' : 'active' }}" @if (Auth::user()->isAdmin() || Auth::user()->isDm()) href="/user/{{ $sc->character->user_id }}/character/{{ $sc->character->id }}" @endif >{{ __($sc->character->name) }}</a>
+        						@endif
     						@endforeach
 						</td>
     				</tr>
