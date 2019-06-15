@@ -65,5 +65,17 @@
             </div>
         </div>
     @endcan
+    
+    @if (Auth::user()->isAdmin())
+        <div class="form-group row">
+            <div class="col-md-6 offset-md-4">
+                <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/trade">
+                	@csrf
+                	@method('GET')
+                    <button type="submit" class="btn btn-primary">{{ __('Trade') }}</button>
+            	</form>
+            </div>
+        </div>
+    @endif
         
 @endsection

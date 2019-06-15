@@ -60,6 +60,11 @@ class Character extends Model
         return $this->hasMany(Contribution::class);
     }
     
+    public function trades()
+    {
+        return $this->hasMany(Trade::class);
+    }
+    
     public function addSession($experience, $gold)
     {
         $this->attributes['experience'] += $experience;
@@ -70,6 +75,11 @@ class Character extends Model
     public function spend($amount)
     {
         $this->attributes['gold'] -= $amount;
+    }
+    
+    public function earn($amount)
+    {
+        $this->attributes['gold'] += $amount;
     }
     
     public function spendToGainExperience($amount)

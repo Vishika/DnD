@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Feature;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +11,7 @@ class UserPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user is an admin.
+     * Determine whether the user is a dm.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -20,6 +19,17 @@ class UserPolicy
     public function dm(User $user)
     {
         return $user->isDm();
+    }
+    
+    /**
+     * Determine whether the user is an admin.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function admin(User $user)
+    {
+        return $user->isAdmin();
     }
 
     /**

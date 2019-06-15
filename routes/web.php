@@ -34,6 +34,9 @@ Route::patch('/user/{user}/character/{character}', 'CharacterController@update')
 Route::get('/user/{user}/character/{character}/contribute', 'ContributionController@create');
 Route::post('/user/{user}/character/{character}/contribute', 'ContributionController@store');
 
+Route::get('/user/{user}/character/{character}/trade', 'TradeController@create');
+Route::post('/user/{user}/character/{character}/trade', 'TradeController@store');
+
 Route::get('/session', 'SessionController@index');
 Route::get('/session/create', 'SessionController@create');
 Route::post('/session', 'SessionController@store');
