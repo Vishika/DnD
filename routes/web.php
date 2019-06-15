@@ -31,8 +31,8 @@ Route::get('/user/{user}/character/{character}', 'CharacterController@show');
 Route::post('/user/{user}/character', 'CharacterController@store');
 Route::patch('/user/{user}/character/{character}', 'CharacterController@update');
 
-Route::get('/user/{user}/character/{character}/contribute', 'ContributionsController@create');
-Route::post('/user/{user}/character/{character}/contribute', 'ContributionsController@store');
+Route::get('/user/{user}/character/{character}/contribute', 'ContributionController@create');
+Route::post('/user/{user}/character/{character}/contribute', 'ContributionController@store');
 
 Route::get('/session', 'SessionController@index');
 Route::get('/session/create', 'SessionController@create');

@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ContributionsController extends Controller
+class ContributionController extends Controller
 {
     /**
      * Show the form for creating a new resource.
