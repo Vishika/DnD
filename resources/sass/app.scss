@@ -6,3 +6,170 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+body {
+	background-color: #181b1e;
+	color: #ffffff;
+}
+
+.border-red {
+	border-bottom: 1px solid #c53131;
+}
+
+.dropdown-menu {
+	background-color: #343a40;
+}
+
+.dropdown-item {
+	color: rgba(255, 255, 255, 0.5);
+}
+.dropdown-item:hover,
+.dropdown-item:focus {
+	color: rgba(255, 255, 255, 0.75);
+	background-color: #343a40;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+	color: #ffffff;
+	background-color: #343a40;
+}
+
+.card {
+	border: none;
+	background-color: #6b6f74;
+}
+
+.card-header {
+	color: rgba(255, 255, 255, 0.75);
+	background-color: #343a40;
+	border-bottom: 1px solid #c53131;
+}
+
+.btn-link, .btn-link:hover {
+	color: #ffffff;
+}
+
+.btn {
+	margin: .25rem;
+}
+
+.btn-primary {
+	background-color: #c53131;
+	border-color: #c53131;
+}
+
+.btn-primary:hover {
+	background-color: #902424;
+	border-color: #902424
+}
+
+ul:not(.navbar-nav) {
+	margin-top: 1rem;
+}
+
+a:not([href]).active {
+	color: #ffffff;
+}
+
+a:not([href]).active:hover {
+	background-color: #6574cd;
+	color: #ffffff;
+}
+
+.active, .inactive, .registrable {
+	border-radius: .25rem;
+	border: 1px solid transparent;
+	color: #ffffff;
+	display: inline-block;
+	margin: .25rem;
+	padding: .375rem .75rem;
+	text-align: center;
+	
+}
+
+.active:hover, .inactive:hover {
+	background-color: #343a40;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.registrable:hover {
+	cursor: default;
+}
+
+.active {
+	background-color: #a2a5a8;
+}
+
+.inactive {
+	background-color: #6b6f74;
+}
+
+.registrable {
+	background-color: #181b1e;
+}
+
+.dm {
+	background-color: #9b59b6;
+}
+
+.people {
+	display: block;
+	padding: .375rem .75rem;
+}
+
+.col-form-person-label {
+	margin-bottom: 0px;
+	line-height: 57px;
+}
+
+[readonly] {
+	cursor: default;
+}
+
+table.table {
+	border-radius: .25rem;
+	-moz-border-radius: .25rem;
+	-webkit-border-radius: .25rem;
+	background-color: #dadbdc;
+	margin-top: 1rem;
+}
+
+.table thead th {
+	border-bottom: none;
+}
+
+.table td, .table th {
+	border-top: none;
+}
+
+table.fillable td {
+	padding: 0.2rem;
+}
+
+tr:nth-child(odd) td {
+	background: #ffffff;
+}
+
+td, th {
+	border-left: none;
+	border-top: none;
+}
+
+table.fillable td a.active {
+	margin: 0;
+}
+
+.overflow {
+	overflow-x:auto;
+}
+
+.shorten {
+	max-width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: relative;
+}

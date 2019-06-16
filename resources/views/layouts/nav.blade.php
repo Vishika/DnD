@@ -19,108 +19,13 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
-    <style type="text/css">
-    <!--
-        ul:not([.navbar-nav]) {
-            margin-top: 1rem;
-        }
-        .btn {
-            margin: .25rem;
-        }
-        a:not([href]).active {
-            color: #ffffff;
-        }
-        a:not([href]).active:hover {
-            background-color: #6574cd;
-            color: #ffffff;
-        }
-        .active, .inactive, .registrable {
-            border-radius: .25rem;
-            border: 1px solid transparent;
-            color: #ffffff;
-            display: inline-block;
-            margin: .25rem;
-            padding: .375rem .75rem;
-            text-align: center;
-            
-        }
-        .active:hover, .inactive:hover {
-            background-color: #191919;
-            color: #ffffff;
-            text-decoration: none;
-        }
-        .registrable:hover {
-            cursor: default;
-        }
-        .active {
-            background-color: #6574cd;
-        }
-        .inactive {
-            background-color: #cccccc;
-        }
-        .registrable {
-            background-color: #e3342f;
-        }
-        .dm {
-            background-color: #9561e2;
-        }
-        .people {
-            display: block;
-            padding: .375rem .75rem;
-        }
-        .col-form-person-label {
-            margin-bottom: 0px;
-            line-height: 57px;
-        }
-        [readonly] {
-            cursor: default;
-        }
-        table.table {
-            border-radius: .25rem;
-            -moz-border-radius: .25rem;
-            -webkit-border-radius: .25rem;
-            border:solid #cccccc 1px;
-        }
-        .table thead th {
-            border-bottom: none;
-        }
-        .table td, .table th {
-            border-top: none;
-        }
-        table.fillable td {
-            padding: 0.2rem;
-        }
-        tr:nth-child(odd) td {
-            background: #cccccc;
-        }
-        td, th {
-            border-left: none;
-            border-top: none;
-        }
-        table.fillable td a.active {
-            margin: 0;
-        }
-        .overflow {
-            overflow-x:auto;
-        }
-        .shorten {
-            max-width: 200px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            position: relative;
-        }
-    -->
-    </style>
-    
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark border-red">
             <div class="container">
             	@auth
                 	<a class="navbar-brand" href="{{ url('/') }}">{{ __('Dashboard') }}</a>
@@ -190,6 +95,10 @@
             @yield('page')
         </main>
     </div>
+    
+    <script src="{{ mix('js/manifest.js') }}"></script>
+    <script src="{{ mix('js/vendor.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
     
 </body>
 </html>
