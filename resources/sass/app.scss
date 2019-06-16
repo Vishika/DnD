@@ -74,8 +74,9 @@ a:not([href]).active {
 }
 
 a:not([href]).active:hover {
-	background-color: #6574cd;
+	background-color: #a2a5a8;
 	color: #ffffff;
+	cursor: default;
 }
 
 .active, .inactive, .registrable {
