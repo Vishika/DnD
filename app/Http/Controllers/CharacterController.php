@@ -43,7 +43,7 @@ class CharacterController extends Controller
      */
     public function show(User $user, Character $character)
     {
-        $this->authorize('owner', $user);
+        $this->authorize('access', $user);
         return view('character.show', compact('user'), compact('character'));
     }
 

@@ -16,7 +16,7 @@ class TradeController extends Controller
      */
     public function create(User $user, Character $character, Request $request)
     {
-        $this->authorize('admin', auth()->user());
+        $this->authorize('dm', auth()->user());
         $characters = array();
         foreach (User::all() as $selectUser)
         {
@@ -38,7 +38,7 @@ class TradeController extends Controller
      */
     public function store(User $user, Character $character, Request $request)
     {
-        $this->authorize('admin', auth()->user());
+        $this->authorize('dm', auth()->user());
         if (auth()->user()->isAdmin()) {
             $max = '';
         } else {

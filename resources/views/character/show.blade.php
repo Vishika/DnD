@@ -44,6 +44,7 @@
         </div>
     </div>
     
+    @can('owner', $user)
 	<div class="form-group row">
         <div class="col-md-6 offset-md-4">
             <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/edit">
@@ -53,6 +54,7 @@
         	</form>
         </div>
     </div>
+    @endcan
     
     @can('contribute', $user)
         <div class="form-group row">
@@ -66,7 +68,7 @@
         </div>
     @endcan
     
-    @if (Auth::user()->isAdmin())
+    @if (Auth::user()->isDm())
         <div class="form-group row">
             <div class="col-md-6 offset-md-4">
                 <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/trade">

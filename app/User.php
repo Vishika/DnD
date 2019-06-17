@@ -51,7 +51,7 @@ class User extends Authenticatable
     }
     
     public function isDm() {
-        return $this->role == 'dm';
+        return $this->role == 'dm' || $this->role == 'admin';
     }
     
     public function isPlayer() {

@@ -33,7 +33,7 @@ class UserPolicy
     }
 
     /**
-     * Determine whether the user can update the character.
+     * Determine whether the user is the owner.
      *
      * @param  \App\User  $user
      * @param  \App\Character  $character
@@ -42,6 +42,18 @@ class UserPolicy
     public function owner(User $user, User $model)
     {
         return $user->isOwner($model);
+    }
+    
+    /**
+     * Determine whether the user access basic function.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Character  $character
+     * @return mixed
+     */
+    public function access(User $user, User $model)
+    {
+        return $user->isOwner($model) || $user->isDm();
     }
     
     /**

@@ -23,6 +23,7 @@
         </div>
     </div>
     
+    @can('owner', $user)
     <div class="form-group row">
         <div class="col-md-6 offset-md-4">
             <form method="POST" action="/user/{{ $user->id }}/edit">
@@ -33,6 +34,7 @@
         	</form>
         </div>
     </div>
+    @endcan
 
     @if (count($user->characters) > 0)
     	<div class="form-group row">
@@ -46,15 +48,17 @@
     @endif
 
     @if (Auth::user()->isAdmin() || !$user->reachedCharacterLimit())
-    	<div class="form-group row mb-0">
-            <div class="col-md-6 offset-md-4">
-                <form method="POST" action="/user/{{ $user->id }}/character/create">
-                	@csrf
-            		@method('GET')
-                    <button type="submit" class="btn btn-primary">{{ __('New Character') }}</button>
-            	</form>
+    	@can('owner', $user)
+        	<div class="form-group row mb-0">
+                <div class="col-md-6 offset-md-4">
+                    <form method="POST" action="/user/{{ $user->id }}/character/create">
+                    	@csrf
+                		@method('GET')
+                        <button type="submit" class="btn btn-primary">{{ __('New Character') }}</button>
+                	</form>
+                </div>
             </div>
-        </div>
+        @endcan
     @endif
     
 @endsection

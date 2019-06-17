@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('dm', auth()->user());
+        $this->authorize('access', auth()->user());
         $users = User::all();
         $registrables = Registrable::all();
         return view('user.index', ['users' => $users, 'registrables' => $registrables]);
@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $this->authorize('owner', $user);
+        $this->authorize('access', $user);
         return view('user.show', compact('user'));
     }
 
