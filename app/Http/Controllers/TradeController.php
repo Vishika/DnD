@@ -18,15 +18,7 @@ class TradeController extends Controller
     {
         $this->authorize('dm', auth()->user());
         $characters = array();
-        foreach (User::all() as $selectUser)
-        {
-            foreach ($selectUser->characters as $selectCharacter)
-            {
-                // show characters as inactive, if their user is inactive
-                $selectCharacter->active = ($selectUser->active) ? $selectCharacter->active : false;
-                $characters[] = $selectCharacter;
-            }
-        }
+        $characters = Character::all()->sortByDesc('experience');
         return view('trade.create', ['user' => $user, 'character' => $character, 'characters' => $characters]);
     }
     

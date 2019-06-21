@@ -164,7 +164,7 @@
             <div class="form-group row" ondrop="dropInList(event)" ondragover="allowDrop(event)">
                 <div id="charactersList" class="people">
                     @foreach ($characters as $character)
-                    	@if ($character->active)
+                    	@if ($character->isActive())
                     		<a class="active" id="character-{{ $character['id'] }}" href="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}" draggable="true" ondragstart="drag(event)" userId="{{ $character['user_id'] }}" characterId="{{ $character['id'] }}" level="{{ $character['level'] }}">{{ __($character['name']) }}</a>
                     	@endif
                     @endforeach

@@ -38,9 +38,9 @@
     
             <div class="col-md-6">
                 <select id="character_id" title="Use if giving gold to another character" class="form-control  @error('character_id') is-invalid @enderror" name="character_id">
-                		<option value="" {{ (!empty(old('character_id'))) ? 'selected' : ''}} >N/A</option>
+            		<option value="" {{ (!empty(old('character_id'))) ? 'selected' : ''}} >N/A</option>
                 	@foreach ($characters as $char)
-                		@if ($char->active)
+                		@if ($char->isActive())
         					<option value="{{ $char->id }}" {{ (!empty(old('character_id'))) ? 'selected' : ''}} >{{ $char->name }}</option>
 						@endif
         			@endforeach

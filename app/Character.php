@@ -65,6 +65,11 @@ class Character extends Model
         return $this->hasMany(Trade::class);
     }
     
+    public function isActive()
+    {
+        return ($this->user['active']) ? $this->active : false;
+    }
+    
     public function addSession($experience, $gold)
     {
         $this->attributes['experience'] += $experience;

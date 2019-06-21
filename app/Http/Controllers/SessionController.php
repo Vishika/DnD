@@ -26,7 +26,6 @@ class SessionController extends Controller
             $allSessions = Session::with('sessionCharacters.character', 'user')->get();
             foreach ($allSessions as $singleSession)
             {
-                //dd($singleSession);
                 foreach ($singleSession->sessionCharacters as $sessionCharacter)
                 {
                     if ($id == $sessionCharacter->character->user_id)
@@ -55,18 +54,8 @@ class SessionController extends Controller
         $difficulty = ['Easy' => 'easy', 'Medium' => 'medium', 'Role Play' => 'role play', 'Hard' => 'hard', 'Deadly' => 'deadly'];
         $this->authorize('dm', auth()->user());
         $dms = DB::table('users')->where('role', 'dm')->orWhere('role', 'admin')->get();
-        $characters = array();
-        foreach (User::all() as $user)
-        {
-            foreach ($user->characters as $character)
-            {
-                // show characters as inactive, if their user is inactive
-                $character->active = ($user->active) ? $character->active : false;
-                $characters[] = $character;
-            }
-        }
+        $characters = Character::all()->sortByDesc('experience');
         return view('session.create', ['dms' => $dms, 'characters' => $characters, 'difficulty' => $difficulty]);
-        
     }
 
     /**

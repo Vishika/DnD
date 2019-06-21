@@ -18,19 +18,11 @@ class CharacterController extends Controller
         $this->authorize('owner', $user);
         if ($user->isPlayer())
         {
-            $characters = auth()->user()->characters;
+            $characters = auth()->user()->characters->sortByDesc('experience');
         }
         else
         {
-            foreach (User::all() as $user)
-            {
-                foreach ($user->characters as $character)
-                {
-                    // show characters as inactive, if their user is inactive
-                    $character->active = ($user->active) ? $character->active : false;
-                    $characters[] = $character;
-                }
-            }
+            $characters = Character::all()->sortByDesc('experience');
         }
         return view('character.index', compact('characters'));
     }
