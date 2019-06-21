@@ -97,6 +97,7 @@ class SessionController extends Controller
             $character->addSession($request->character_experience[$character_id], $request->character_gold[$character_id]);
             $character->save();
         }
+        session()->flash('message', "$request->name has been logged.");
         return redirect('/session');
     }
 }

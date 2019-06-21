@@ -69,6 +69,7 @@ class CharacterController extends Controller
             $validated = request()->validate($this->validateCharacter('dm-update'));
         }
         $character->update($validated);
+        session()->flash('message', "$character->name has been updated.");
         return redirect('/user/' . $user->id . '/character/' . $character->id);
     }
     
@@ -95,6 +96,7 @@ class CharacterController extends Controller
         $request->merge(array('user_id' => $user->id));
         $validated = request()->validate($this->validateCharacter('create'));
         Character::create($validated);
+        session()->flash('message', "$user->name has a new character.");
         return redirect('/user/' . $user->id);
     }
     

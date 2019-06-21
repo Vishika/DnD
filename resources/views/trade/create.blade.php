@@ -57,11 +57,11 @@
         <div class="form-group row">
             <div class="col-md-6 offset-md-4">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="free" id="free" {{ $character->free ? 'checked' : '' }}>
+                    <input class="form-check-input" type="checkbox" name="give" id="give" {{ old('give') ? 'checked' : '' }}>
     
-                    <label class="form-check-label" for="free">{{ __('Free') }}</label>
+                    <label class="form-check-label" for="give">{{ __('Give the character this amount for free') }}</label>
                     
-                     @error('free')
+                     @error('give')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

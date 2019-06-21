@@ -29,6 +29,7 @@ class RegistrableController extends Controller
             'discord_name' => ['required', 'string', 'min:3', 'max:191', 'regex:/.*#\d{4}\b/i', 'unique:users', 'unique:registrables'],
         ]);
         Registrable::create($validated);
+        session()->flash('message', "$request->discord_name is now able to register.");
         return redirect("/user");
     }
 }

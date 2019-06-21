@@ -77,6 +77,7 @@ class UserController extends Controller
             'active' => ['boolean'],
         ]);
         $user->update($validated);
+        session()->flash('message', "$user->name has been updated.");
         return redirect("/user/$user->id");
     }
     
@@ -95,6 +96,7 @@ class UserController extends Controller
         ]);
         $validated['password'] = Hash::make($validated['password']);
         $user->update($validated);
+        session()->flash('message', "$user->name has had their password updated.");
         return redirect("/user/$user->id");
     }
 }

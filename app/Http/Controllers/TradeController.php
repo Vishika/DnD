@@ -31,7 +31,7 @@ class TradeController extends Controller
     public function store(User $user, Character $character, Request $request)
     {
         $this->authorize('dm', auth()->user());
-        if (auth()->user()->isAdmin()) {
+        if (auth()->user()->isAdmin() && $request->filled('give')) {
             $max = '';
         } else {
             $max = 'max:' . $character->gold;
@@ -44,9 +44,10 @@ class TradeController extends Controller
         // once we've validated the character id, the real id we want to send is of the character making the trade
         $recipient_id = $validated['character_id'];
         $validated['character_id'] = $character->id;
-        
-        if (!$request->filled('free'))
+        $reciever = '';
+        if (!$request->filled('give'))
         {
+            $type = 'spent';
             Trade::create($validated);
             // udpate the character
             $character->spend($validated['gold']);
@@ -54,22 +55,25 @@ class TradeController extends Controller
             // if the recipient id exists, it means gold was given to this person
             if (!empty($recipient_id))
             {
+                $type = 'given';
                 $validated['character_id'] = $recipient_id;
                 $recipient = Character::find($recipient_id);
                 $recipient->earn($validated['gold']);
                 $recipient->save();
                 $validated['gold'] = -$validated['gold'];
                 Trade::create($validated);
+                $reciever = " to $recipient->name";
             }
         }
         else
         {
+            $type = 'earned';
             $character->earn($validated['gold']);
             $character->save();
             $validated['gold'] = -$validated['gold'];
             Trade::create($validated);
         }
-        
+        session()->flash('message', "$character->name has $type $request->gold gold$reciever.");
         return redirect('/user/' . $user->id . '/character/' . $character->id);
     }
 }

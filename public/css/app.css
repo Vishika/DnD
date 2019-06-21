@@ -10835,3 +10835,15 @@ table.fillable td a.active {
   position: relative;
 }
 
+.alert {
+  margin-bottom: 0px;
+}
+
+.py-6 {
+  padding-top: 3em;
+}
+
+.my-6 {
+  margin-top: 3em;
+}
+

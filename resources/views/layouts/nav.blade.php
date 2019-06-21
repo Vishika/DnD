@@ -91,11 +91,25 @@
             </div>
         </nav>
 
-        <main class="py-4">
+		@if(session('message'))
+				<div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+							<div class="alert alert-info alert-block my-6">
+                            	<button type="button" class="close" data-dismiss="alert">x</button>	
+                            	<strong>{{ session('message') }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		@endif
+
+        <div class="py-6">
             @yield('page')
-        </main>
+        </div>
+
     </div>
-    
+
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>

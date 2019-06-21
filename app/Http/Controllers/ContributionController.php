@@ -43,6 +43,7 @@ class ContributionController extends Controller
         $character = Character::find($character->id);
         $character->spendToGainExperience($request->amount);
         $character->save();
+        session()->flash('message', "$character->name has made a contribution of $request->amount gold.");
         return redirect('/user/' . $user->id . '/character/' . $character->id);
     }
 }
