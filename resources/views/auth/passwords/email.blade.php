@@ -2,17 +2,20 @@
 @section('title', 'Reset Password')
 @section('page')
     @component('layouts.card')
-    	@slot('header')
-    		Reset Password
-    	@endslot
 
-        @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
+    	<div class="card-header">
+        	<div class="header-row">
+        		<div class="mr-auto">
+        			<a class="header-item">{{ __('Reset Password') }}</a>
+    			</div>
             </div>
-        @endif
-        
-        <p>Please contact one of the administrators on discord, they can reset your password for you.</p>
-        
+    	</div>
+
+        <div class="card-body">
+
+            <p>Please contact one of the administrators on discord, they can reset your password for you.</p>
+
+        </div>
+
     @endcomponent
 @endsection

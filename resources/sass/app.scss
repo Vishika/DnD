@@ -42,9 +42,35 @@ body {
 }
 
 .card-header {
-	color: rgba(255, 255, 255, 0.75);
+	padding: 0.5rem 1rem;
 	background-color: #343a40;
 	border-bottom: 1px solid #c53131;
+}
+
+.header-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.header-item {
+	padding: 0.5em;
+	background: transparent;
+	border: none;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+a.header-item {
+	display: block;
+}
+
+.header-item:hover {
+	color: rgba(255, 255, 255, 0.75);
+	background-color: #343a40;
+	text-decoration: none;
+}
+
+.header-item:focus {
+	outline: none;
 }
 
 .btn-link, .btn-link:hover {

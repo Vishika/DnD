@@ -2,186 +2,191 @@
 @section('title', 'Log Session')
 @section('page')
     @component('layouts.card')
-    	@slot('header')
-    		Log Session
-    	@endslot
 
-    	<form method="POST" action="/session">
-            @csrf
-        
-            <div class="form-group row">
-                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Session Name') }}</label>
-        
-                <div class="col-md-6">
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
-        
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+    	<div class="card-header">
+        	<div class="header-row">
+        		<div class="mr-auto">
+        			<a class="header-item">{{ __('Log Session') }}</a>
+    			</div>
+                <div class="ml-auto">
+                    <button class="header-item" form="log" type="submit">{{ __('Log') }}</button>
                 </div>
             </div>
+    	</div>
+
+        <div class="card-body">
+        	<form id="log" method="POST" action="/session">
+                @csrf
             
-            <div class="form-group row">
-                <label for="created_at" class="col-md-4 col-form-label text-md-right">{{ __('Session Date') }}</label>
-        
-                <div class="col-md-6">
-                    <input id="created_at" type="date" class="form-control @error('created_at') is-invalid @enderror" name="created_at" value="{{ empty(old('created_at')) ? date('Y-m-d') : old('created_at') }}" required>
-        
-                    @error('created_at')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            
-            <div class="form-group row">
-                <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Dungeon Master') }}</label>
-        
-                <div class="col-md-6">
-                    <select id="user_id" class="form-control  @error('user_id') is-invalid @enderror" name="user_id" required>
-                    	@foreach ($dms as $dm)
-            				<option value="{{ $dm->id }}" {{ ((empty(old('user_id')) && (Auth::user()->id == $dm->id)) || (!empty(old('user_id')) && (old('user_id') == $dm->id)))? 'selected' : ''}} >{{ $dm->name }}</option>
-            			@endforeach
-            		</select>
-        
-                    @error('user_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            
-            <div class="form-group row">
-                <label for="duration" class="col-md-4 col-form-label text-md-right">{{ __('Duration (hours)') }}</label>
-        
-                <div class="col-md-6">
-                    <input id="duration" type="number" step="1" min="1" max="12" class="form-control @error('duration') is-invalid @enderror" name="duration" value="{{ empty(old('duration')) ? 3 : old('duration') }}" required>
-        
-                    @error('duration')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            
-            <div class="form-group row">
-                <label for="difficulty" class="col-md-4 col-form-label text-md-right">{{ __('Difficulty (hazard)') }}</label>
-        		
-                <div class="col-md-6">
-                    <select id="difficulty" class="form-control  @error('difficulty') is-invalid @enderror" name="difficulty" required>
-                    	@foreach ($difficulty as $name => $value)
-                        	@if (old('difficulty') == $value)
-                                  <option value="{{ $value }}" selected>{{ $name }}</option>
-                            @else
-                                  <option value="{{ $value }}">{{ $name }}</option>
-                            @endif
-                        @endforeach
-            		</select>
-        
-                    @error('difficulty')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            
-            <div class="form-group row">
-                <label for="encounters" class="col-md-4 col-form-label text-md-right">{{ __('Encounters (fights)') }}</label>
-        
-                <div class="col-md-6">
-                    <input id="encounters" type="number" step="1" min="0" max="12" class="form-control @error('encounters') is-invalid @enderror" name="encounters" value="{{ empty(old('encounters')) ? 3 : old('encounters') }}" required>
-        
-                    @error('encounters')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            
-            <div class="form-group row">
-                <label for="note" class="col-md-4 col-form-label text-md-right">{{ __('Note') }}</label>
-        
-                <div class="col-md-6">
-                    <input id="note" type="text" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}">
-        
-                    @error('note')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-    
-    		 @if (Auth::user()->isAdmin())
                 <div class="form-group row">
-                    <label for="xp" class="col-md-4 col-form-label text-md-right">{{ __('Experience (override)') }}</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Session Name') }}</label>
             
                     <div class="col-md-6">
-                        <input id="xp" type="number" class="form-control" onchange="updateXp()">
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
+            
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
                 
                 <div class="form-group row">
-                    <label for="gp" class="col-md-4 col-form-label text-md-right">{{ __('Gold (override)') }}</label>
+                    <label for="created_at" class="col-md-4 col-form-label text-md-right">{{ __('Session Date') }}</label>
             
                     <div class="col-md-6">
-                        <input id="gp" type="number" class="form-control" onchange="updateGp()">
+                        <input id="created_at" type="date" class="form-control @error('created_at') is-invalid @enderror" name="created_at" value="{{ empty(old('created_at')) ? date('Y-m-d') : old('created_at') }}" required>
+            
+                        @error('created_at')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
-            @endif
+                
+                <div class="form-group row">
+                    <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Dungeon Master') }}</label>
             
+                    <div class="col-md-6">
+                        <select id="user_id" class="form-control  @error('user_id') is-invalid @enderror" name="user_id" required>
+                        	@foreach ($dms as $dm)
+                				<option value="{{ $dm->id }}" {{ ((empty(old('user_id')) && (Auth::user()->id == $dm->id)) || (!empty(old('user_id')) && (old('user_id') == $dm->id)))? 'selected' : ''}} >{{ $dm->name }}</option>
+                			@endforeach
+                		</select>
             
-            <div class="overflow">
-                <table id="charactersTable" class="table fillable" ondrop="dropInTable(event)" ondragover="allowDrop(event)">
-                    <thead>
-                        <tr>
-                        	<th>Character</th>
-                        	<th>LvL</th>
-                            <th>Hours</th>
-                            <th>Hazard</th>
-                            <th>Fights</th>
-                            <th>XP</th>
-                            <th>GP</th>
-                            <th>Note</th>
-                        </tr>
-                    </thead> 
-                    <tbody>
-                    </tbody>          
-                </table>
-            </div>
-            
-            <div id="info">
-                <p>Drag active characters into the table above.</p>
-                <p>Players should be rewarded by the number of encounters they completed.</p>
-                <p>When determining the difficulty try to approximate the average</p>
-                <p>An RP encounter should take roughly a half hour</p>
-            </div>
-            
-            @if (!empty($characters))
-                <div class="form-group row" ondrop="dropInList(event)" ondragover="allowDrop(event)">
-                    <div id="charactersList" class="people">
-                        @foreach ($characters as $character)
-                        	@if ($character->isActive())
-                        		<a class="active" id="character-{{ $character['id'] }}" href="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}" draggable="true" ondragstart="drag(event)" userId="{{ $character['user_id'] }}" characterId="{{ $character['id'] }}" level="{{ $character['level'] }}">{{ __($character['name']) }}</a>
-                        	@endif
-                        @endforeach
+                        @error('user_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
-            @endif
+                
+                <div class="form-group row">
+                    <label for="duration" class="col-md-4 col-form-label text-md-right">{{ __('Duration (hours)') }}</label>
             
-            <div class="form-group row mb-0">
-                <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                    <div class="col-md-6">
+                        <input id="duration" type="number" step="1" min="1" max="12" class="form-control @error('duration') is-invalid @enderror" name="duration" value="{{ empty(old('duration')) ? 3 : old('duration') }}" required>
+            
+                        @error('duration')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
-            </div>
-    	</form>
+                
+                <div class="form-group row">
+                    <label for="difficulty" class="col-md-4 col-form-label text-md-right">{{ __('Difficulty (hazard)') }}</label>
+            		
+                    <div class="col-md-6">
+                        <select id="difficulty" class="form-control  @error('difficulty') is-invalid @enderror" name="difficulty" required>
+                        	@foreach ($difficulty as $name => $value)
+                            	@if (old('difficulty') == $value)
+                                      <option value="{{ $value }}" selected>{{ $name }}</option>
+                                @else
+                                      <option value="{{ $value }}">{{ $name }}</option>
+                                @endif
+                            @endforeach
+                		</select>
+            
+                        @error('difficulty')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="encounters" class="col-md-4 col-form-label text-md-right">{{ __('Encounters (fights)') }}</label>
+            
+                    <div class="col-md-6">
+                        <input id="encounters" type="number" step="1" min="0" max="12" class="form-control @error('encounters') is-invalid @enderror" name="encounters" value="{{ empty(old('encounters')) ? 3 : old('encounters') }}" required>
+            
+                        @error('encounters')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="note" class="col-md-4 col-form-label text-md-right">{{ __('Note') }}</label>
+            
+                    <div class="col-md-6">
+                        <input id="note" type="text" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}">
+            
+                        @error('note')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+        
+        		 @if (Auth::user()->isAdmin())
+                    <div class="form-group row">
+                        <label for="xp" class="col-md-4 col-form-label text-md-right">{{ __('Experience (override)') }}</label>
+                
+                        <div class="col-md-6">
+                            <input id="xp" type="number" class="form-control" onchange="updateXp()">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="gp" class="col-md-4 col-form-label text-md-right">{{ __('Gold (override)') }}</label>
+                
+                        <div class="col-md-6">
+                            <input id="gp" type="number" class="form-control" onchange="updateGp()">
+                        </div>
+                    </div>
+                @endif
+                
+                
+                <div class="overflow">
+                    <table id="charactersTable" class="table fillable" ondrop="dropInTable(event)" ondragover="allowDrop(event)">
+                        <thead>
+                            <tr>
+                            	<th>Character</th>
+                            	<th>LvL</th>
+                                <th>Hours</th>
+                                <th>Hazard</th>
+                                <th>Fights</th>
+                                <th>XP</th>
+                                <th>GP</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                        </tbody>          
+                    </table>
+                </div>
+                
+                <div id="info">
+                    <p>Drag active characters into the table above.</p>
+                    <p>Players should be rewarded by the number of encounters they completed.</p>
+                    <p>When determining the difficulty try to approximate the average</p>
+                    <p>An RP encounter should take roughly a half hour</p>
+                </div>
+                
+                @if (!empty($characters))
+                    <div class="form-group row" ondrop="dropInList(event)" ondragover="allowDrop(event)">
+                        <div id="charactersList" class="people">
+                            @foreach ($characters as $character)
+                            	@if ($character->isActive())
+                            		<a class="active" id="character-{{ $character['id'] }}" href="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}" draggable="true" ondragstart="drag(event)" userId="{{ $character['user_id'] }}" characterId="{{ $character['id'] }}" level="{{ $character['level'] }}">{{ __($character['name']) }}</a>
+                            	@endif
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+                
+        	</form>
+    	</div>
 	
     	<script>
             function allowDrop(event) {
