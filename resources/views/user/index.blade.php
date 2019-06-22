@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Users')
+@section('title', 'Users')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Users
+    	@endslot
     	
         <div class="form-group row">
     		<div class="people">

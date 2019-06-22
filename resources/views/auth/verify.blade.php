@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Verify Your Email Address')
+@section('title', 'Verify Your Email Address')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Verify Your Email Address
+    	@endslot
 
         @if (session('resent'))
             <div class="alert alert-success" role="alert">

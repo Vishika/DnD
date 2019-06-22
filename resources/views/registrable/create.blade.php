@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Register Discord User')
+@section('title', 'Register Discord User')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Register Discord User
+    	@endslot
 
     	<form method="POST" action="/registrable">
             @csrf

@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Contribute')
+@section('title', 'Contribute')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Contribute
+    	@endslot
 
     	<form method="POST" action="/user/{{ $user->id }}/character/{{ $character->id }}/contribute">
             @csrf

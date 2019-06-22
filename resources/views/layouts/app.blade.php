@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('header', 'Fortunes Dawn')</title>
+    <title>@yield('title', 'Fortunes Dawn')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -104,9 +104,7 @@
             </div>
 		@endif
 
-        <div class="py-6">
             @yield('page')
-        </div>
 
     </div>
 

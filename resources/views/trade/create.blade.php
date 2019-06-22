@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Trade')
+@section('title', 'Trade')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Trade
+    	@endslot
 
     	<form method="POST" action="/user/{{ $user->id }}/character/{{ $character->id }}/trade">
             @csrf

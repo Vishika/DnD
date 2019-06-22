@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Reset Password')
+@section('title', 'Reset Password')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Reset Password
+    	@endslot
 
         <form method="POST" action="{{ route('password.update') }}">
             @csrf

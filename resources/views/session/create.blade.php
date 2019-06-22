@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Log Session')
+@section('title', 'Log Session')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Log Session
+    	@endslot
 
     	<form method="POST" action="/session">
             @csrf

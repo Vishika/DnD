@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Characters')
+@section('title', 'Characters')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Characters
+    	@endslot
     
     	@if (!empty($characters))
         	<div class="form-group row">

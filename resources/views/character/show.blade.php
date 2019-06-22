@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', $character->name)
+@section('title', $character->name)
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		{{ $character->name }}
+    	@endslot
 
     	<div class="form-group row">
             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
@@ -82,4 +85,12 @@
         @endif
 
     @endcomponent
+    
+    @component('layouts.card')
+    	@slot('header')
+    		Trades
+    	@endslot
+    	<trades></trades>
+    @endcomponent
+    
 @endsection

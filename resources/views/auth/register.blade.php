@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Register')
+@section('title', 'Register')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Register
+    	@endslot
 
         <form method="POST" action="{{ route('register') }}">
             @csrf

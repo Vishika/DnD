@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Sessions')
+@section('title', 'Sessions')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Sessions
+    	@endslot
 	
     	@if (Auth::user()->isAdmin() || Auth::user()->isDm())
         	<div class="form-group row">

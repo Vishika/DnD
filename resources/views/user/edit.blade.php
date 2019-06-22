@@ -1,7 +1,10 @@
 @extends('layouts.app')
-@section('header', 'Edit User')
+@section('title', 'Edit User')
 @section('page')
     @component('layouts.card')
+    	@slot('header')
+    		Edit User
+    	@endslot
 
     <form method="POST" action="/user/{{ $user->id }}">
     	@csrf
