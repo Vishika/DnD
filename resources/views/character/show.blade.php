@@ -5,6 +5,18 @@
     	@slot('header')
     		{{ $character->name }}
     	@endslot
+    	
+    	@can('owner', $user)
+        	<div class="form-group row">
+                <div class="col-md-6">
+                    <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/edit">
+                    	@csrf
+                    	@method('GET')
+                        <button type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
+                	</form>
+                </div>
+            </div>
+        @endcan
 
     	<div class="form-group row">
             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
@@ -48,33 +60,16 @@
             </div>
         </div>
         
-        @can('owner', $user)
-    	<div class="form-group row">
-            <div class="col-md-6 offset-md-4">
-                <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/edit">
-                	@csrf
-                	@method('GET')
-                    <button type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
-            	</form>
-            </div>
-        </div>
-        @endcan
-        
-        @can('contribute', $user)
-            <div class="form-group row">
-                <div class="col-md-6 offset-md-4">
-                    <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/contribute">
-                    	@csrf
-                    	@method('GET')
-                        <button type="submit" class="btn btn-primary">{{ __('Contribute') }}</button>
-                	</form>
-                </div>
-            </div>
-        @endcan
-        
-        @if (Auth::user()->isDm())
-            <div class="form-group row">
-                <div class="col-md-6 offset-md-4">
+    @endcomponent
+    
+    @can('dm', $user)
+        @component('layouts.card')
+        	@slot('header')
+        		Trades
+        	@endslot
+        	
+        	<div class="form-group row">
+                <div class="col-md-6">
                     <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/trade">
                     	@csrf
                     	@method('GET')
@@ -82,15 +77,65 @@
                 	</form>
                 </div>
             </div>
-        @endif
-
-    @endcomponent
+            
+            <div class="overflow">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead> 
+                    <tbody>
+                    	@foreach ($character->trades as $trade)
+            				<tr>
+                                <td>{{ $trade['gold'] }}</td>
+                                <td>{{ $trade['note'] }}</td>
+            				</tr>
+                        @endforeach
+                  </tbody>          
+                </table>
+            </div>
+        	
+        @endcomponent
+    @endcan
     
     @component('layouts.card')
     	@slot('header')
-    		Trades
+    		Contributions
     	@endslot
-    	<trades></trades>
+    	
+    	@can('contribute', $user)
+    	<div class="form-group row">
+            <div class="col-md-6">
+                <form method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/contribute">
+                	@csrf
+                	@method('GET')
+                    <button type="submit" class="btn btn-primary">{{ __('Contribute') }}</button>
+            	</form>
+            </div>
+        </div>
+        @endcan
+        
+        <div class="overflow">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Project</th>
+                    </tr>
+                </thead> 
+                <tbody>
+                	@foreach ($character->contributions as $contribution)
+        				<tr>
+                            <td>{{ $contribution['amount'] }}</td>
+                            <td>{{ $contribution->project['name'] }}</td>
+        				</tr>
+                    @endforeach
+              </tbody>          
+            </table>
+        </div>
+    	
     @endcomponent
     
 @endsection
