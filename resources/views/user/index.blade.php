@@ -6,6 +6,16 @@
     		Users
     	@endslot
     	
+    	<div class="form-group row">
+            <div class="col-md-6">
+                <form method="POST" action="/registrable/create">
+                    @csrf
+            		@method('GET')
+                    <button type="submit" class="btn btn-primary">{{ __('Register Discord User') }}</button>
+            	</form>
+            </div>
+        </div>
+    	
         <div class="form-group row">
     		<div class="people">
                 @foreach ($users as $user)
@@ -17,15 +27,5 @@
         	</div>
         </div>
         
-        <div class="form-group row">
-            <div class="col-md-6">
-                <form method="POST" action="/registrable/create">
-                    @csrf
-            		@method('GET')
-                    <button type="submit" class="btn btn-primary">{{ __('Register Discord User') }}</button>
-            	</form>
-            </div>
-        </div>
-    
     @endcomponent
 @endsection
