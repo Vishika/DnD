@@ -14,6 +14,7 @@ class RegistrableController extends Controller
      */
     public function create()
     {
+        $this->authorize('dm', auth()->user());
         return view('registrable.create');
     }
     
@@ -25,6 +26,7 @@ class RegistrableController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('dm', auth()->user());
         $validated = request()->validate([
             'discord_name' => ['required', 'string', 'min:3', 'max:191', 'regex:/.*#\d{4}\b/i', 'unique:users', 'unique:registrables'],
         ]);

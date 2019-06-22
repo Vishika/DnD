@@ -45,13 +45,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/user">{{ __('Users') }}</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/{{ Auth::user()->id }}/character">{{ __('Characters') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/session">{{ __('Sessions') }}</a>
+                                </li>
                             @endif
-                            <li class="nav-item">
-                                <a class="nav-link" href="/user/{{ Auth::user()->id }}/character">{{ __('Characters') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/session">{{ __('Sessions') }}</a>
-                            </li>
                         </ul>
                     @endauth
 

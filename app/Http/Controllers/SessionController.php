@@ -18,29 +18,8 @@ class SessionController extends Controller
      */
     public function index()
     {
-        $this->authorize('owner', auth()->user());
-        if (auth()->user()->isPlayer())
-        {
-            $id = auth()->user()->id;
-            $sessions = array();
-            $allSessions = Session::with('sessionCharacters.character', 'user')->get();
-            foreach ($allSessions as $singleSession)
-            {
-                foreach ($singleSession->sessionCharacters as $sessionCharacter)
-                {
-                    if ($id == $sessionCharacter->character->user_id)
-                    {
-                        $sessions[] = $singleSession;
-                        break;
-                    }
-                }
-            }
-            
-        }
-        else
-        {
-            $sessions = Session::with('sessionCharacters.character', 'user')->get();
-        }
+        $this->authorize('dm', auth()->user());
+        $sessions = Session::with('sessionCharacters.character', 'user')->get();
         return view('session.index', compact('sessions'));
     }
 

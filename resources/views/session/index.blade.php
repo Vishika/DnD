@@ -8,14 +8,16 @@
         		<div class="mr-auto">
         			<a class="header-item">{{ __('Sessions') }}</a>
     			</div>
-                <div class="ml-auto">
-                    <button class="header-item" form="log-session" type="submit">{{ __('Log Session') }}</button>
-                </div>
+    			@can (Auth::user()->isAdmin() || Auth::user()->isDm())
+                    <div class="ml-auto">
+                        <button class="header-item" form="log-session" type="submit">{{ __('Log Session') }}</button>
+                    </div>
+                @endif
             </div>
     	</div>
 
         <div class="card-body">
-        	@if (Auth::user()->isAdmin() || Auth::user()->isDm())
+        	@can (Auth::user()->isAdmin() || Auth::user()->isDm())
                 <form id="log-session" method="POST" action="/session/create">
                 	@csrf
                 	@method('GET')

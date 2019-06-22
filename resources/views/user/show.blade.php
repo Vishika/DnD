@@ -73,38 +73,37 @@
                 @endcan
             @endif
         
-            @if (count($user->characters) > 0)
-                <div class="col-md-6 people">
-                @foreach ($user->characters as $character)
+            @if (count($user->characters))
+                <div class="people">
+                @foreach ($user->characters->sortByDesc('experience') as $character)
                 	<a class="{{ $character->active ? 'active' : 'inactive' }}" href="/user/{{ $user->id }}/character/{{ $character->id }}">{{ __($character->name) }}</a>
                 @endforeach
                 </div>
-            @endif
+            
         
-            <div class="overflow">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Level</th>
-                            <th>Experience</th>
-                            <th>Gold</th>
-                        </tr>
-                    </thead> 
-                    <tbody>
-                    	@foreach ($user->characters as $character)
-            				<tr>
-                                <td>{{ $character['name'] }}</td>
-                                <td>{{ $character['level'] }}</td>
-                                <td>{{ $character['experience'] }}</td>
-                                <td>{{ $character['gold'] }}</td>
-            				</tr>
-                        @endforeach
-                  </tbody>          
-                </table>
-            </div>
-		</div>
-
+                <div class="overflow">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Level</th>
+                                <th>Experience</th>
+                                <th>Gold</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                        	@foreach ($user->characters->sortByDesc('experience') as $character)
+                				<tr>
+                                    <td>{{ $character['name'] }}</td>
+                                    <td>{{ $character['level'] }}</td>
+                                    <td>{{ $character['experience'] }}</td>
+                                    <td>{{ $character['gold'] }}</td>
+                				</tr>
+                            @endforeach
+                      </tbody>          
+                    </table>
+                </div>
+			@endif
 		</div>
     
     @endcomponent

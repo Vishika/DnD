@@ -66,16 +66,54 @@
 		</div>
         
     @endcomponent
-    
-    @can('dm', $user)
-        @component('layouts.card')
 
+	@if (count($character->sessionCharacters))
+        @component('layouts.card')
+    
+        	<div class="card-header">
+            	<div class="header-row">
+            		<div class="mr-auto">
+            			<a class="header-item">{{ __('Adventures') }}</a>
+        			</div>
+                </div>
+        	</div>
+    
+        	<div class="card-body">
+            
+                <div class="overflow">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Gold</th>
+                                <th>Experience</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                        	@foreach ($character->sessionCharacters as $sessionCharacter)
+                				<tr>
+                                    <td>{{ $sessionCharacter->session['name'] }}</td>
+                                    <td>{{ $sessionCharacter['gold'] }}</td>
+                                    <td>{{ $sessionCharacter['experience'] }}</td>
+                				</tr>
+                            @endforeach
+                      </tbody>          
+                    </table>
+                </div>
+    		</div>
+        	
+        @endcomponent
+	@endif
+
+    @if (count($character->trades))
+        @component('layouts.card')
+    
         	<div class="card-header">
             	<div class="header-row">
             		<div class="mr-auto">
             			<a class="header-item">{{ __('Trades') }}</a>
         			</div>
-        			@can('owner', $user)
+        			@can('dm', $user)
                         <div class="ml-auto">
                             <button class="header-item" form="trade" type="submit">{{ __('Trade') }}</button>
                         </div>
@@ -107,52 +145,54 @@
                       </tbody>          
                     </table>
                 </div>
-			</div>
+    		</div>
         	
         @endcomponent
-    @endcan
+	@endif
     
-    @component('layouts.card')
-
-    	<div class="card-header">
-        	<div class="header-row">
-        		<div class="mr-auto">
-        			<a class="header-item">{{ __('Contributions') }}</a>
-    			</div>
-    			@can('contribute', $user)
-                    <div class="ml-auto">
-                        <button class="header-item" form="contribute" type="submit">{{ __('Contribute') }}</button>
-                    </div>
-                @endcan
-            </div>
-    	</div>
-
-    	<div class="card-body">
-            <form id="contribute" method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/contribute">
-            	@csrf
-            	@method('GET')
-        	</form>
-        
-            <div class="overflow">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Amount</th>
-                            <th>Project</th>
-                        </tr>
-                    </thead> 
-                    <tbody>
-                    	@foreach ($character->contributions as $contribution)
-            				<tr>
-                                <td>{{ $contribution['amount'] }}</td>
-                                <td>{{ $contribution->project['name'] }}</td>
-            				</tr>
-                        @endforeach
-                  </tbody>          
-                </table>
-            </div>
-		</div>
-    	
-    @endcomponent
+    @if (count($character->contributions))
+        @component('layouts.card')
     
+        	<div class="card-header">
+            	<div class="header-row">
+            		<div class="mr-auto">
+            			<a class="header-item">{{ __('Contributions') }}</a>
+        			</div>
+        			@can('contribute', $user)
+                        <div class="ml-auto">
+                            <button class="header-item" form="contribute" type="submit">{{ __('Contribute') }}</button>
+                        </div>
+                    @endcan
+                </div>
+        	</div>
+    
+        	<div class="card-body">
+                <form id="contribute" method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/contribute">
+                	@csrf
+                	@method('GET')
+            	</form>
+            
+                <div class="overflow">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Amount</th>
+                                <th>Project</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                        	@foreach ($character->contributions as $contribution)
+                				<tr>
+                                    <td>{{ $contribution['amount'] }}</td>
+                                    <td>{{ $contribution->project['name'] }}</td>
+                				</tr>
+                            @endforeach
+                      </tbody>          
+                    </table>
+                </div>
+    		</div>
+        	
+        @endcomponent
+	@endif
+
 @endsection

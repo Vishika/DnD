@@ -15,15 +15,8 @@ class CharacterController extends Controller
      */
     public function index(User $user)
     {
-        $this->authorize('owner', $user);
-        if ($user->isPlayer())
-        {
-            $characters = auth()->user()->characters->sortByDesc('experience');
-        }
-        else
-        {
-            $characters = Character::all()->sortByDesc('experience');
-        }
+        $this->authorize('dm', $user);
+        $characters = Character::all()->sortByDesc('experience');
         return view('character.index', compact('characters'));
     }
 
