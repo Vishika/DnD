@@ -104,7 +104,7 @@
             </div>
 		@endif
 
-            @yield('page')
+        @yield('page')
 
     </div>
 
