@@ -78,7 +78,7 @@
                 </div>
         	</div>
     
-        	<div class="card-body">
+        	<div class="card-body" style="display: none;">
             
                 <div class="overflow">
                     <table class="table">
@@ -121,7 +121,7 @@
                 </div>
         	</div>
     
-        	<div class="card-body">
+        	<div class="card-body" style="display: none;">
                 <form id="trade" method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/trade">
                 	@csrf
                 	@method('GET')
@@ -166,7 +166,7 @@
                 </div>
         	</div>
     
-        	<div class="card-body">
+        	<div class="card-body" style="display: none;">
                 <form id="contribute" method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/contribute">
                 	@csrf
                 	@method('GET')
