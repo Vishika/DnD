@@ -111,6 +111,12 @@
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
+    <script type="text/javascript">
+        $(".header-row .mr-auto").click(function() {
+            $(this).parent().parent().next().slideToggle("slow");
+        });
+    </script>
+    @yield('script')
     
 </body>
 </html>

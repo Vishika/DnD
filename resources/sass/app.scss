@@ -7,6 +7,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Jquery
+@import '~jquery-ui/themes/base/all.css';
 
 body {
 	background-color: #181b1e;
@@ -61,6 +63,7 @@ body {
 
 a.header-item {
 	display: block;
+	cursor: pointer;
 }
 
 .header-item:hover {
