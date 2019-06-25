@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Session;
 use App\SessionCharacter;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Character;
@@ -30,8 +29,8 @@ class SessionController extends Controller
      */
     public function create()
     {
-        $difficulty = ['Easy' => 'easy', 'Medium' => 'medium', 'Role Play' => 'role play', 'Hard' => 'hard', 'Deadly' => 'deadly'];
         $this->authorize('dm', auth()->user());
+        $difficulty = ['Easy' => 'easy', 'Medium' => 'medium', 'Role Play' => 'role play', 'Hard' => 'hard', 'Deadly' => 'deadly'];
         $dms = DB::table('users')->where('role', 'dm')->orWhere('role', 'admin')->get();
         $characters = Character::all()->sortByDesc('experience');
         return view('session.create', ['dms' => $dms, 'characters' => $characters, 'difficulty' => $difficulty]);
