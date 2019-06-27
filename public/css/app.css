@@ -12359,7 +12359,7 @@ table.fillable td {
   padding: 0.2rem;
 }
 
-tr:nth-child(odd) td {
+table.alternating tr:nth-child(odd) td {
   background: #ffffff;
 }
 
@@ -12440,5 +12440,13 @@ table.fillable td a.active {
 
 .legendary {
   background-color: #fce5cd;
+}
+
+.right {
+  text-align: right;
+}
+
+.left {
+  text-align: left;
 }
 

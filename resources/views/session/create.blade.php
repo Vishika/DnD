@@ -148,7 +148,7 @@
                 
                 
                 <div class="overflow">
-                    <table id="charactersTable" class="table fillable" ondrop="dropInTable(event)" ondragover="allowDrop(event)">
+                    <table id="charactersTable" class="table alternating fillable" ondrop="dropInTable(event)" ondragover="allowDrop(event)">
                         <thead>
                             <tr>
                             	<th>Character</th>

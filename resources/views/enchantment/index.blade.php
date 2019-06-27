@@ -40,42 +40,42 @@
         		</ul>
         		<div class="fit center">
         			<div class="overflow">
-                		<table class="table">
+                		<table class="table bg-light right">
                 			<tr>
-        						<th>Rarity</th>
+        						<th class="left">Rarity</th>
         						<th>Arcana</th>
         						<th>DC</th>
         						<th>Price</th>
         					</tr>
-            				<tr class="white-row">
-                                <td><a class="rarity common">Common</a></td>
+            				<tr class="common">
+                                <td class="left">Common</td>
                                 <td>+2</td>
                                 <td>5</td>
                                 <td>500</td>
         					</tr>
-        					<tr class="white-row">
-                                <td><a class="rarity uncommon">Uncommon</a></td>
+        					<tr class="uncommon">
+                                <td class="left">Uncommon</td>
                                 <td>+3</td>
                                 <td>10</td>
-                                <td>2500</td>
+                                <td>2,500</td>
         					</tr>
-        					<tr class="white-row">
-                                <td><a class="rarity rare">Rare</a></td>
+        					<tr class="rare">
+                                <td class="left">Rare</td>
                                 <td>+4</td>
                                 <td>15</td>
-                                <td>7000</td>
+                                <td>7,000</td>
         					</tr>
-        					<tr class="white-row">
-                                <td><a class="rarity very rare">Very Rare</a></td>
+        					<tr class="very rare">
+                                <td class="left">Very Rare</td>
                                 <td>+5</td>
                                 <td>20</td>
-                                <td>20000</td>
+                                <td>20,000</td>
         					</tr>
-        					<tr class="white-row">
-                                <td><a class="rarity legendary">Legendary</a></td>
+        					<tr class="legendary">
+                                <td class="left">Legendary</td>
                                 <td>+6</td>
                                 <td>25</td>
-                                <td>40000</td>
+                                <td>40,000</td>
         					</tr>
         				</table>
 					</div>
@@ -96,7 +96,7 @@
         
             <div class="card-body" style="display: none;">
             	<div class="overflow">
-                	<table class="table">
+                	<table class="table alternating">
                         	@foreach ($enchantments->where('type', $type) as $enchantment)
                 				<tr>
                                     <td class="fit" title="{{ $enchantment->rarity }}">

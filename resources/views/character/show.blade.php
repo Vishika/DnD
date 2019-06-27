@@ -81,7 +81,7 @@
         	<div class="card-body" style="display: none;">
             
                 <div class="overflow">
-                    <table class="table">
+                    <table class="table alternating">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -128,7 +128,7 @@
             	</form>
                 
                 <div class="overflow">
-                    <table class="table">
+                    <table class="table alternating">
                         <thead>
                             <tr>
                                 <th>Amount</th>
@@ -173,7 +173,7 @@
             	</form>
             
                 <div class="overflow">
-                    <table class="table">
+                    <table class="table alternating">
                         <thead>
                             <tr>
                                 <th>Amount</th>

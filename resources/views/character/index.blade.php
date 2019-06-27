@@ -22,7 +22,7 @@
                 </div>
                 
                 <div class="overflow">
-                    <table class="table">
+                    <table class="table alternating">
                         <thead>
                             <tr>
                                 <th>Name</th>
