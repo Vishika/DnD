@@ -40,3 +40,5 @@ Route::post('/user/{user}/character/{character}/trade', 'TradeController@store')
 Route::get('/session', 'SessionController@index');
 Route::get('/session/create', 'SessionController@create');
 Route::post('/session', 'SessionController@store');
+
+Route::get('/enchantment', 'EnchantmentController@index');

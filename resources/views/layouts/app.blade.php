@@ -52,6 +52,9 @@
                                     <a class="nav-link" href="/session">{{ __('Sessions') }}</a>
                                 </li>
                             @endif
+                            <li class="nav-item">
+                                <a class="nav-link" href="/enchantment">{{ __('Enchantments') }}</a>
+                            </li>
                         </ul>
                     @endauth
 
