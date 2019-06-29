@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\CharacterLevelChart;
+use App\Charts\DmBarChart;
+use App\Charts\DmDoughnutChart;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +25,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+        if (auth()->user()->isPlayer()) {
+            $charts = array();
+        }
+        else {
+            $charts['dm'] = [
+                'dmBar' => new DmBarChart(),
+                'dmDoughnut' => new DmDoughnutChart(),
+                'CharacterLevelChart' => new CharacterLevelChart(),
+            ];
+        }
+        return view('index', ['user' => auth()->user(), 'charts' => $charts]);
     }
 }
