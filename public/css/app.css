@@ -12409,6 +12409,10 @@ table.fillable td a.active {
   justify-content: center;
 }
 
+.wrap {
+  flex-wrap: wrap;
+}
+
 .rarity {
   border-radius: 0.25rem;
   border: 1px solid transparent;
