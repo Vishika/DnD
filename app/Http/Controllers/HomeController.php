@@ -31,8 +31,8 @@ class HomeController extends Controller
         $charts['player'] = array();
         foreach (auth()->user()->characters as $character) {
             if ($character->active) {
-                $charts['player'][$character->name][] = new PartyBarChart($character);
-                $charts['player'][$character->name][] = new PartyDoughnutChart($character);
+//                 $charts['player'][$character->name][] = new PartyBarChart($character);
+//                 $charts['player'][$character->name][] = new PartyDoughnutChart($character);
             }
         }
         if (!auth()->user()->isPlayer()) {
