@@ -6,6 +6,8 @@ use App\Charts\ActivityChart;
 use App\Charts\CharacterLevelChart;
 use App\Charts\DmBarChart;
 use App\Charts\DmDoughnutChart;
+use App\Charts\PartyBarChart;
+use App\Charts\PartyDoughnutChart;
 
 class HomeController extends Controller
 {
@@ -26,10 +28,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->isPlayer()) {
-            $charts = array();
+        $charts['player'] = array();
+        foreach (auth()->user()->characters as $character) {
+            if ($character->active) {
+                $charts['player'][$character->name][] = new PartyBarChart($character);
+                $charts['player'][$character->name][] = new PartyDoughnutChart($character);
+            }
         }
-        else {
+        if (!auth()->user()->isPlayer()) {
             $charts['dm'] = [
                 'dmBar' => new DmBarChart(),
                 'dmDoughnut' => new DmDoughnutChart(),
