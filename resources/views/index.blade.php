@@ -53,12 +53,12 @@
 @endsection
 
 @section('script')
-	@can('dm', $user)
-		@foreach($charts['player'] as $player)
-    		@foreach($player as $chart)
-    			{!! $chart->script() !!}
-    		@endforeach
+	@foreach($charts['player'] as $player)
+		@foreach($player as $chart)
+			{!! $chart->script() !!}
 		@endforeach
+	@endforeach
+	@can('dm', $user)
 		@foreach($charts['dm'] as $chart)
 			{!! $chart->script() !!}
 		@endforeach
