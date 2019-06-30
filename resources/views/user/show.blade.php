@@ -5,7 +5,7 @@
 
     	<div class="card-header">
         	<div class="header-row">
-        		<div class="mr-auto">
+        		<div class="mr-auto slide">
         			<a class="header-item">{{ $user->name }}</a>
     			</div>
                 @can('owner', $user)
@@ -49,7 +49,7 @@
 
     	<div class="card-header">
         	<div class="header-row">
-        		<div class="mr-auto">
+        		<div class="mr-auto slide">
         			<a class="header-item">{{ __('Characters') }}</a>
     			</div>
     			@if (Auth::user()->isAdmin() || !$user->reachedCharacterLimit())

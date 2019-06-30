@@ -5,7 +5,7 @@
 
     	<div class="card-header">
         	<div class="header-row">
-        		<div class="mr-auto">
+        		<div class="mr-auto slide">
         			<a class="header-item">{{ __('Change Password') }}</a>
     			</div>
                 <div class="ml-auto">

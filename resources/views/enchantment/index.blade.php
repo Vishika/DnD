@@ -4,7 +4,7 @@
 	@component('layouts.card')
     	<div class="card-header">
         	<div class="header-row">
-        		<div class="mr-auto">
+        		<div class="mr-auto slide">
         			<a class="header-item">{{ __('Enchanting rules') }}</a>
     			</div>
             </div>
@@ -88,7 +88,7 @@
 		@component('layouts.card')
         	<div class="card-header">
             	<div class="header-row">
-            		<div class="mr-auto">
+            		<div class="mr-auto slide">
             			<a class="header-item">{{ __(ucfirst($type) . ' Enchantments') }}</a>
         			</div>
                 </div>

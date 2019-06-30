@@ -5,7 +5,7 @@
 
     	<div class="card-header">
         	<div class="header-row">
-        		<div class="mr-auto">
+        		<div class="mr-auto slide">
         			<a class="header-item">{{ $character->name }}</a>
     			</div>
     			@can('owner', $user)
@@ -72,7 +72,7 @@
     
         	<div class="card-header">
             	<div class="header-row">
-            		<div class="mr-auto">
+            		<div class="mr-auto slide">
             			<a class="header-item">{{ __('Adventures') }}</a>
         			</div>
                 </div>
@@ -110,7 +110,7 @@
     
         	<div class="card-header">
             	<div class="header-row">
-            		<div class="mr-auto">
+            		<div class="mr-auto slide">
             			<a class="header-item">{{ __('Trades') }}</a>
         			</div>
         			@can('dm', $user)
@@ -155,7 +155,7 @@
     
         	<div class="card-header">
             	<div class="header-row">
-            		<div class="mr-auto">
+            		<div class="mr-auto slide">
             			<a class="header-item">{{ __('Contributions') }}</a>
         			</div>
         			@can('contribute', $user)

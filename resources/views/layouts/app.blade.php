@@ -109,7 +109,7 @@
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-        $(".header-row .mr-auto").click(function() {
+        $(".slide").click(function() {
             $(this).parent().parent().next().slideToggle("slow");
         });
     </script>
