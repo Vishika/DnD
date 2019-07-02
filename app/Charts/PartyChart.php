@@ -7,9 +7,6 @@ use App\Session;
 
 class PartyChart extends DndChart
 {
-    protected $dataInIntegers;
-    protected $dataInPercentage;
-    
     /**
      * Initializes the chart.
      *
@@ -45,35 +42,23 @@ class PartyChart extends DndChart
         $charactersInfo = array();
         foreach ($characters as $character) {
             $charactersInfo[$character->id]['name'] = $character->name;
+            $charactersInfo[$character->id]['level'] = $character->level;
             $charactersInfo[$character->id]['experience'] = $character->experience;
-            $charactersInfo[$character->id]['gold'] = $character->gold;
+            $charactersInfo[$character->id]['gold'] = 0;
             $charactersInfo[$character->id]['played'] = 0;
         }
         foreach ($charactersPlayedWith as $partyMemberId => $sessionsPlayedWith) {
             $charactersInfo[$partyMemberId]['played'] = $sessionsPlayedWith;
         }
-        $partySize = 5;
+        $partySize = 8;
         // pick the top x many characters this character has played with
         $party = collect($charactersInfo)->sortBy('played')->reverse()->take($partySize);
         // in some cases a friend may have played every game with you, but we want the main character to be first in the list
         $mainCharacter = $party->pull($characterId);
         $party->prepend($mainCharacter);
-        $this->dataInIntegers = $party;
-        // turn them into percentages
-        $partyTotals['experience'] = 0;
-        $partyTotals['gold'] = 0;
-        $partyTotals['played'] = 0;
-        foreach ($party as $member) {
-            $partyTotals['experience'] += $member['experience'];
-            $partyTotals['gold'] += $member['gold'];
-            $partyTotals['played'] += $member['played'];
-        }
-        $this->dataInPercentage = $party->map(function ($member, $id) use($partyTotals) {
-            $percentages['name'] = $member['name'];
-            $percentages['experience'] = round($member['experience'] / $partyTotals['experience'] * 100);
-            $percentages['gold'] = round($member['gold'] / $partyTotals['gold'] * 100);
-            $percentages['played'] = round($member['played'] / $partyTotals['played'] * 100);
-            return $percentages;
-        });
+        $this->labels($party->pluck('name'));
+        $chartType = 'bar';
+        $this->dataset('Experience', $chartType, $party->pluck('experience'))->options($this->getBloodColours());
+        $this->minimalist(true);
     }
 }

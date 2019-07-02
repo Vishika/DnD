@@ -86,7 +86,23 @@ class Character extends Model
     {
         $this->attributes['gold'] += $amount;
     }
-    
+
+    public function experienceRequiredForNextLevel() {
+        if ($this->attributes['experience'] == 20) {
+            return 0;
+        } else {
+            return (self::$levels[$this->attributes['level'] + 1] - $this->attributes['experience']);
+        }
+    }
+
+    public function experienceProgress() {
+        if ($this->attributes['level'] == 20) {
+            return 100;
+        } else {
+            return round($this->attributes['experience'] / self::$levels[$this->attributes['level'] + 1] * 100);
+        }
+    }
+
     public function spendToGainExperience($amount)
     {
         $this->attributes['gold'] -= $amount;

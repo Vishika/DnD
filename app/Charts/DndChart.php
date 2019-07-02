@@ -19,6 +19,10 @@ abstract class DndChart extends Chart
     protected $red2 = '#DA7B7B';
     protected $red3 = '#E7ABAB';
     protected $red4 = '#EFC9C9';
+    protected $red5 = '#F3D7D7';
+    protected $red6 = '#F7E5E5';
+    protected $red7 = '#F9EEEE';
+    protected $red8 = '#FBF4F4';
     
     public function __construct()
     {
@@ -44,6 +48,10 @@ abstract class DndChart extends Chart
                 $this->red2,
                 $this->red3,
                 $this->red4,
+                $this->red5,
+                $this->red6,
+                $this->red7,
+                $this->red8,
             ]
         ];
     }

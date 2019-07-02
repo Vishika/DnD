@@ -6,8 +6,7 @@ use App\Charts\ActivityChart;
 use App\Charts\CharacterLevelChart;
 use App\Charts\DmBarChart;
 use App\Charts\DmDoughnutChart;
-use App\Charts\PartyBarChart;
-use App\Charts\PartyDoughnutChart;
+use App\Charts\PartyChart;
 
 class HomeController extends Controller
 {
@@ -28,21 +27,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $charts['player'] = array();
+        $data['player'] = array();
+        $achievements = new Achievements();
         foreach (auth()->user()->characters as $character) {
             if ($character->active) {
-                $charts['player'][$character->name][] = new PartyBarChart($character);
-                $charts['player'][$character->name][] = new PartyDoughnutChart($character);
+                $data['player'][$character->id]['charts'][] = new PartyChart($character);
+                $data['player'][$character->id]['name'] = $character->name;
             }
         }
         if (!auth()->user()->isPlayer()) {
-            $charts['dm'] = [
+            $data['dm']['charts'] = [
                 'dmBar' => new DmBarChart(),
                 'dmDoughnut' => new DmDoughnutChart(),
                 'characterLevelChart' => new CharacterLevelChart(),
                 'activityChart' => new ActivityChart(),
             ];
         }
-        return view('index', ['user' => auth()->user(), 'charts' => $charts]);
+        return view('index', ['user' => auth()->user(), 'data' => $data, 'achievements' => $achievements]);
     }
 }

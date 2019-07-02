@@ -2,23 +2,36 @@
 
 @section('page')
 
-	@foreach($charts['player'] as $key => $player)
-    	@if (!empty($charts['player']))
+	@foreach($data['player'] as $id => $character)
+    	@if (!empty($data['player']))
         	@component('layouts.card')
         
             	<div class="card-header">
-                	<div class="header-row">
-                		<div class="mr-auto">
-                			<a class="header-item">{{ __($key) }}</a>
-            			</div>
+            		<div class="fit">
+            			<a class="header-item title-name">{{ __($character['name']) }}</a>
+            			<div class="progress-bar">
+        					<span title="{{ $achievements->getNextLevelReq($id) }} experience to go." class="progress" style="width:{{ $achievements->getLevelProgress($id) }}%"></span>
+                		</div>
                     </div>
             	</div>
                 <div class="card">
                 	<div class="fit center wrap card-body">
-                		@foreach($player as $chart)
-                			<div>
-                				{!! $chart->container() !!}
+                		@foreach($character['charts'] as $chart)
+                			@if (!empty($achievements->getAchievements($id)))
+                				<div class="dashboard-item">
+                    				<div class="dashboard-item-header">Achievements</div>
+                    				@foreach($achievements->getAchievements($id) as $name => $achievement)
+                    					<div class="fit center">
+                    						<img title="{{ $achievement }}" class="achievement" src="{{ asset('images/achievements/' . $name . '.png') }}">
+                    					</div>
+                    				@endforeach
+                				</div>
+                			@endif
+                			<div class="dashboard-item">
+                				<div class="dashboard-item-header"></div>
+                				<div>{!! $chart->container() !!}</div>
                 			</div>
+                			
             			@endforeach
                 	</div>
                 </div>
@@ -39,8 +52,8 @@
         	</div>
             <div class="card">
             	<div class="fit center wrap card-body bg-white">
-        			@foreach($charts['dm'] as $chart)
-            			<div>
+        			@foreach($data['dm']['charts'] as $chart)
+            			<div class="dashboard-item">
             				{!! $chart->container() !!}
             			</div>
         			@endforeach
@@ -53,13 +66,13 @@
 @endsection
 
 @section('script')
-	@foreach($charts['player'] as $player)
-		@foreach($player as $chart)
+	@foreach($data['player'] as $character)
+		@foreach($character['charts'] as $chart)
 			{!! $chart->script() !!}
 		@endforeach
 	@endforeach
 	@can('dm', $user)
-		@foreach($charts['dm'] as $chart)
+		@foreach($data['dm']['charts'] as $chart)
 			{!! $chart->script() !!}
 		@endforeach
 	@endcan

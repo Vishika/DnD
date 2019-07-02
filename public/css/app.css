@@ -12409,7 +12409,7 @@ table.fillable td a.active {
 }
 
 .center {
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .wrap {
@@ -12451,5 +12451,37 @@ table.fillable td a.active {
 
 .left {
   text-align: left;
+}
+
+.dashboard-item {
+  padding: 20px;
+}
+
+.dashboard-item-header {
+  padding-bottom: 20px;
+}
+
+.achievement {
+  width: 70px;
+  padding-bottom: 20px;
+}
+
+.title-name {
+  white-space: nowrap;
+}
+
+.progress-bar {
+  border: 1px solid #343a40;
+  width: 100%;
+  height: 100%;
+  margin: 10px;
+  background-color: #181b1e;
+  box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.progress {
+  border-radius: 0;
+  background-color: #c53131;
+  box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 }
 
