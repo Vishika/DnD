@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Character;
-use App\SessionCharacter;
+use App\Session;
 
 class Achievements
 {
@@ -22,6 +22,8 @@ class Achievements
         3 => ['place' => 'third', 'metal' => 'copper'],
     ];
     
+    protected $achievements = array();
+    
     public function __construct()
     {
         $characters = array();
@@ -34,23 +36,38 @@ class Achievements
             $characters[$character->id][$this->hours['name']] = 0;
             $characters[$character->id]['encounters'] = 0;
             $characters[$character->id]['sessions'] = 0;
-            $characters[$character->id]['comrades'] = array();
+            $characters[$character->id][$this->comrades['name']] = array();
             $characters[$character->id]['achievements'] = array();
             $characters[$character->id]['progress'] = $character->experienceProgress();
             $characters[$character->id]['levelup'] = $character->experienceRequiredForNextLevel();
         }
-        foreach (SessionCharacter::all() as $session) {
-            if (!$session->dm) {
-                $characters[$session->character_id]['sessions']++;
-                $characters[$session->character_id][$this->treasure['name']] += $session->gold;
-                $characters[$session->character_id][$this->hours['name']] += $session->duration;
-                $characters[$session->character_id][$this->encounters['name']] += $session->encounters;
+        foreach (Session::all() as $session) {
+            $sessionParty = array();
+            foreach ($session->sessionCharacters as $sessionCharacter) {
+                if (!$sessionCharacter->dm) {
+                    $sessionParty[] = $sessionCharacter->character_id;
+                    $characters[$sessionCharacter->character_id]['sessions']++;
+                    $characters[$sessionCharacter->character_id][$this->treasure['name']] += $sessionCharacter->gold;
+                    $characters[$sessionCharacter->character_id][$this->hours['name']] += $sessionCharacter->duration;
+                    $characters[$sessionCharacter->character_id][$this->encounters['name']] += $sessionCharacter->encounters;
+                }
             }
+            foreach ($sessionParty as $characterId) {
+                $characters[$characterId][$this->comrades['name']] = array_unique(array_merge($characters[$characterId]['comrades'], $sessionParty));
+            }
+        }
+        foreach ($characters as $id => $character) {
+            $characters[$id][$this->comrades['name']] = count($character[$this->comrades['name']]);
         }
         $this->characters = $characters;
         $this->addAchievement($this->experience);
         $this->addAchievement($this->treasure);
         $this->addAchievement($this->hours);
+        $this->addAchievement($this->comrades);
+    }
+    
+    public function getAllAchievements() {
+        return $this->achievements;
     }
     
     public function getAchievements($id) {
@@ -75,11 +92,14 @@ class Achievements
     }
     
     private function addAchievementToCharacter($iteration, $type, $characters) {
-        $equal = (sizeof($characters) > 1) ? 'equal' : 'place';
-        foreach ($characters as $character) {
-            $achievement = $this->tiers[$iteration]['metal'] . '-' . $type['name'];
-            $text = 'You are ' . $this->tiers[$iteration]['place'] . ' ' . $equal . ' in terms of ' . $type['name'] . ' ' . $type['verb'] . '!';
-            $this->characters[$character['id']]['achievements'][$achievement] = $text;
+        if (!empty($characters)) {
+            $equal = (sizeof($characters) > 1) ? 'equal ' : '';
+            foreach ($characters as $character) {
+                $achievement = $this->tiers[$iteration]['metal'] . '-' . $type['name'];
+                $text = 'You are ' . $this->tiers[$iteration]['place'] . ' ' . $equal . 'in terms of ' . $type['name'] . ' ' . $type['verb'] . '!';
+                $this->characters[$character['id']]['achievements'][$achievement] = $text;
+                $this->achievements[] = ['achievement' => $achievement, 'text' =>$text, 'character' => $character['name']];
+            }
         }
     }
 }

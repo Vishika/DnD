@@ -39,6 +39,28 @@
         	@endcomponent
     	@endif
 	@endforeach
+	
+	@can('dm', $user)
+		 @component('layouts.card')
+
+        	<div class="card-header">
+            	<div class="header-row">
+            		<div class="mr-auto">
+            			<a class="header-item">{{ __('All Achievements') }}</a>
+        			</div>
+                </div>
+        	</div>
+            	<div class="fit center wrap card-body">
+        			<div class="dashboard-item">
+        				@foreach($achievements->getAllAchievements() as $achievement)
+    						<img title="{{ $achievement['character'] }}" class="achievement" src="{{ asset('images/achievements/' . $achievement['achievement'] . '.png') }}">
+    						<div class="achievement-character">{{ $achievement['character'] }}</div>
+        				@endforeach
+        			</div>
+            	</div>
+
+		@endcomponent
+    @endcan
 
 	@can('dm', $user)
 		 @component('layouts.card')
