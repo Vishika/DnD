@@ -232,85 +232,88 @@
     
         function dropInTable(event) {
         	event.preventDefault();
-        	// hide the info
-        	document.getElementById('info').style.display = 'none';
-            var character = event.dataTransfer.getData('text');
-            var charactersTable = document.getElementById('charactersTable');
-            var rowCount = charactersTable.rows.length;
-            var tr = charactersTable.insertRow(rowCount);
-            // insert character draggable
-            var td = document.createElement('td');
-            td = tr.insertCell(0);
-    		td.appendChild(document.getElementById(character));
-         	// set the id of the row so we can remove it easily later
-            var nodes = td.childNodes;
-            var userId = nodes[0].getAttribute('userId');
-            if ($('#user_id').val() == userId) {
-            	document.getElementById(character).classList.add('dm');
-            }
-            var characterId = nodes[0].getAttribute('characterId');
-            var characterLevel = nodes[0].getAttribute('level');
-            var rowId = 'row-character-' + characterId;
-            tr.setAttribute('id', rowId);
-         	// add hidden fields
-    		var hidden = $('<input />', {name: 'character_id[' + characterId + ']', type: 'hidden', value: characterId});
-    		hidden.appendTo(td);
-    		var hidden = $('<input />', {name: 'character_user_id[' + characterId + ']', type: 'hidden', value: userId});
-    		hidden.appendTo(td);
-    		// insert the level
-    		var td = $('<td />');
-            var input = $('<div />', {class: 'form-control', text: characterLevel});
-            input.appendTo(td);
-            td.appendTo(tr);
-            // insert the duration input
-            var defaultValue = $('#duration').val();
-            var td = $('<td />');
-            var input = $('<input />', {name: 'character_duration[' + characterId + ']', class: 'form-control', type: 'number', step: '1', min: '0', max: '12', required: 'true', value: $('#duration').val()});
-            input.appendTo(td);
-            td.appendTo(tr);
-            // insert what the difficulty input
-            var defaultValue = $('#difficulty').val();
-            var options = {
-    			'role play': 'R',
-                'easy': 'E',
-                'medium': 'M',
-                'hard': 'H',
-                'deadly': 'D',
-            }
-            var td = $('<td />');
-            var select = $('<select />', {name: 'character_difficulty[' + characterId + ']', class: 'form-control', onchange: 'updateXpGp(\'' + rowId + '\')'});
-            for(var value in options) {
-                if (value == defaultValue) {
-                	$('<option />', {value: value, text: options[value], selected: 'selected'}).appendTo(select);
-                } else {
-                	$('<option />', {value: value, text: options[value]}).appendTo(select);
-                }
-            }
-            select.appendTo(td);
-            td.appendTo(tr);
-         	// insert the encounters input
-            var defaultValue = $('#encounters').val();
-            var td = $('<td />');
-            var input = $('<input />', {name: 'character_encounters[' + characterId + ']', class: 'form-control', type: 'number', step: '1', min: '0', max: '12', required: 'true', value: $('#encounters').val(), onchange: 'updateXpGp(\'' + rowId + '\')'});
-            input.appendTo(td);
-            td.appendTo(tr);
-         	// insert the experience input
-            var td = $('<td />');
-            var input = $('<input />', {name: 'character_experience[' + characterId + ']', class: 'form-control', type: 'number', required: 'true', value: '0'});
-            input.appendTo(td);
-            td.appendTo(tr);
-         	// insert the gold input
-            var td = $('<td />');
-            var input = $('<input />', {name: 'character_gold[' + characterId + ']', class: 'form-control', type: 'number', required: 'true', value: '0'});
-            input.appendTo(td);
-            td.appendTo(tr);
-         	// insert the note input
-         	var td = $('<td />');
-            var input = $('<input />', {name: 'character_note[' + characterId + ']', class: 'form-control', type: 'text'});
-            input.appendTo(td);
-            td.appendTo(tr);
-    		// update the gold and experience based on the encounters and difficulty
-            updateXpGp(rowId);
+        	var character = event.dataTransfer.getData('text');
+        	// do not allow characters already in the table to be dropped in
+        	if (character && character.startsWith('character-') && !($('#row-'.concat(character)).length)) {
+	        	// hide the info
+	        	document.getElementById('info').style.display = 'none';
+	            var charactersTable = document.getElementById('charactersTable');
+	            var rowCount = charactersTable.rows.length;
+	            var tr = charactersTable.insertRow(rowCount);
+	            // insert character draggable
+	            var td = document.createElement('td');
+	            td = tr.insertCell(0);
+	    		td.appendChild(document.getElementById(character));
+	         	// set the id of the row so we can remove it easily later
+	            var nodes = td.childNodes;
+	            var userId = nodes[0].getAttribute('userId');
+	            if ($('#user_id').val() == userId) {
+	            	document.getElementById(character).classList.add('dm');
+	            }
+	            var characterId = nodes[0].getAttribute('characterId');
+	            var characterLevel = nodes[0].getAttribute('level');
+	            var rowId = 'row-character-' + characterId;
+	            tr.setAttribute('id', rowId);
+	         	// add hidden fields
+	    		var hidden = $('<input />', {name: 'character_id[' + characterId + ']', type: 'hidden', value: characterId});
+	    		hidden.appendTo(td);
+	    		var hidden = $('<input />', {name: 'character_user_id[' + characterId + ']', type: 'hidden', value: userId});
+	    		hidden.appendTo(td);
+	    		// insert the level
+	    		var td = $('<td />');
+	            var input = $('<div />', {class: 'form-control', text: characterLevel});
+	            input.appendTo(td);
+	            td.appendTo(tr);
+	            // insert the duration input
+	            var defaultValue = $('#duration').val();
+	            var td = $('<td />');
+	            var input = $('<input />', {name: 'character_duration[' + characterId + ']', class: 'form-control', type: 'number', step: '1', min: '0', max: '12', required: 'true', value: $('#duration').val()});
+	            input.appendTo(td);
+	            td.appendTo(tr);
+	            // insert what the difficulty input
+	            var defaultValue = $('#difficulty').val();
+	            var options = {
+	    			'role play': 'R',
+	                'easy': 'E',
+	                'medium': 'M',
+	                'hard': 'H',
+	                'deadly': 'D',
+	            }
+	            var td = $('<td />');
+	            var select = $('<select />', {name: 'character_difficulty[' + characterId + ']', class: 'form-control', onchange: 'updateXpGp(\'' + rowId + '\')'});
+	            for(var value in options) {
+	                if (value == defaultValue) {
+	                	$('<option />', {value: value, text: options[value], selected: 'selected'}).appendTo(select);
+	                } else {
+	                	$('<option />', {value: value, text: options[value]}).appendTo(select);
+	                }
+	            }
+	            select.appendTo(td);
+	            td.appendTo(tr);
+	         	// insert the encounters input
+	            var defaultValue = $('#encounters').val();
+	            var td = $('<td />');
+	            var input = $('<input />', {name: 'character_encounters[' + characterId + ']', class: 'form-control', type: 'number', step: '1', min: '0', max: '12', required: 'true', value: $('#encounters').val(), onchange: 'updateXpGp(\'' + rowId + '\')'});
+	            input.appendTo(td);
+	            td.appendTo(tr);
+	         	// insert the experience input
+	            var td = $('<td />');
+	            var input = $('<input />', {name: 'character_experience[' + characterId + ']', class: 'form-control', type: 'number', required: 'true', value: '0'});
+	            input.appendTo(td);
+	            td.appendTo(tr);
+	         	// insert the gold input
+	            var td = $('<td />');
+	            var input = $('<input />', {name: 'character_gold[' + characterId + ']', class: 'form-control', type: 'number', required: 'true', value: '0'});
+	            input.appendTo(td);
+	            td.appendTo(tr);
+	         	// insert the note input
+	         	var td = $('<td />');
+	            var input = $('<input />', {name: 'character_note[' + characterId + ']', class: 'form-control', type: 'text'});
+	            input.appendTo(td);
+	            td.appendTo(tr);
+	    		// update the gold and experience based on the encounters and difficulty
+	            updateXpGp(rowId);
+        	}
     	}
     
     	function updateXpGp(rowId) {
