@@ -42,3 +42,6 @@ Route::get('/session/create', 'SessionController@create');
 Route::post('/session', 'SessionController@store');
 
 Route::get('/enchantment', 'EnchantmentController@index');
+
+Route::get('/signup', 'SignupController@index');
+Route::post('/signup', 'SignupController@store');

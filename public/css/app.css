@@ -12283,7 +12283,6 @@ a:not([href]).active {
 }
 
 a:not([href]).active:hover {
-  background-color: #a2a5a8;
   color: #ffffff;
   cursor: default;
 }
@@ -12300,8 +12299,8 @@ a:not([href]).active:hover {
   text-align: center;
 }
 
-.active:hover,
-.inactive:hover {
+a[href].active:hover,
+a[href].inactive:hover {
   background-color: #343a40;
   color: #ffffff;
   text-decoration: none;
@@ -12325,6 +12324,10 @@ a:not([href]).active:hover {
 
 .dm {
   background-color: #9b59b6;
+}
+
+.tentative {
+  background-color: #dadbdc;
 }
 
 .people {
@@ -12490,5 +12493,21 @@ table.fillable td a.active {
   border-radius: 0;
   background-color: #c53131;
   box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.signup td.short,
+.signup th.short {
+  width: 150px;
+}
+
+.signup td.shorter,
+.signup th.shorter {
+  width: 100px;
+}
+
+.signup label {
+  padding-left: 5px;
+  padding-right: 10px;
+  margin: 0;
 }
 

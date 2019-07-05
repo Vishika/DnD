@@ -46,6 +46,9 @@
                                 </li>
                             @endif
                             <li class="nav-item">
+                                <a class="nav-link" href="/signup">{{ __('Sign up') }}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/enchantment">{{ __('Enchantments') }}</a>
                             </li>
                         </ul>
