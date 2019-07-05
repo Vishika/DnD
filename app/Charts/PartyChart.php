@@ -52,7 +52,7 @@ class PartyChart extends DndChart
         }
         $partySize = 8;
         // pick the top x many characters this character has played with
-        $party = collect($charactersInfo)->sortBy('played')->reverse()->take($partySize);
+        $party = collect($charactersInfo)->whereNotIn('played', [0])->sortBy('played')->reverse()->take($partySize);
         // in some cases a friend may have played every game with you, but we want the main character to be first in the list
         $mainCharacter = $party->pull($characterId);
         $party->prepend($mainCharacter);
