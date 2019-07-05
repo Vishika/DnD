@@ -75,9 +75,8 @@
 
         <div class="card-body" style="display: none;">
         	<div>
-        		<p>Games have a start time of 7pm</p>
+        		<p>Games usually have a start time of 7pm, jump in the voice chat a half hour before :)</p>
         		<p>Games will go ahead if there are at least one DM and 3 players</p>
-        		<p>First come first serve, people who can definitely come will take priority</p>
         		<p>There is a usually a max of 5 players per DM</p>
    			</div>
 		</div>
