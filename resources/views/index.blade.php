@@ -9,8 +9,8 @@
             	<div class="card-header">
             		<div class="fit">
             			<a class="header-item title-name">{{ __($character['name']) }}</a>
-            			<div class="progress-bar">
-        					<span title="{{ $achievements->getNextLevelReq($id) }} experience to go." class="progress" style="width:{{ $achievements->getLevelProgress($id) }}%"></span>
+            			<div class="progress-bar" title="{{ $achievements->getNextLevelReq($id) }} experience to go.">
+        					<span class="progress" style="width:{{ $achievements->getLevelProgress($id) }}%"></span>
                 		</div>
                     </div>
             	</div>
