@@ -8,7 +8,7 @@
         		<div class="mr-auto slide">
         			<a class="header-item">{{ __('Sessions') }}</a>
     			</div>
-    			@can (Auth::user()->isAdmin() || Auth::user()->isDm())
+    			@if (Auth::user()->isDm())
                     <div class="ml-auto">
                         <button class="header-item" form="log-session" type="submit">{{ __('Log Session') }}</button>
                     </div>
@@ -17,7 +17,7 @@
     	</div>
 
         <div class="card-body">
-        	@can (Auth::user()->isAdmin() || Auth::user()->isDm())
+        	@if (Auth::user()->isDm())
                 <form id="log-session" method="POST" action="/session/create">
                 	@csrf
                 	@method('GET')

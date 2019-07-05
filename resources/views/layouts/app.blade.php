@@ -34,7 +34,7 @@
                         	<li class="nav-item">
                                 <a class="nav-link" href="/user/{{ Auth::user()->id }}">{{ __('Profile') }}</a>
                             </li>
-                            @if (Auth::user()->isAdmin() || Auth::user()->isDm())
+                            @if (Auth::user()->isDm())
                                 <li class="nav-item">
                                     <a class="nav-link" href="/user">{{ __('Users') }}</a>
                                 </li>
