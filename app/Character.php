@@ -33,7 +33,7 @@ class Character extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'name', 'race', 'class', 'active'
+        'user_id', 'name', 'race', 'class', 'active', 'note', 'dm_note'
     ];
     
     /**

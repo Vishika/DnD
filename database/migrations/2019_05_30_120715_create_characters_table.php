@@ -23,6 +23,8 @@ class CreateCharactersTable extends Migration
             $table->string('race');
             $table->string('class');
             $table->boolean('active')->default(true);
+            $table->text('note');
+            $table->text('dm_note');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

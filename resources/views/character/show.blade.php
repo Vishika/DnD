@@ -67,6 +67,35 @@
         
     @endcomponent
 
+	@component('layouts.card')
+
+    	<div class="card-header">
+        	<div class="header-row">
+        		<div class="mr-auto slide">
+        			<a class="header-item">{{ __('Notes') }}</a>
+    			</div>
+    			@can('owner', $user)
+                <div class="ml-auto">
+                    <button class="header-item" form="edit-character" type="submit">{{ __('Edit') }}</button>
+                </div>
+                @endcan
+            </div>
+    	</div>
+
+    	<div class="card-body" style="display: none;">
+            <form id="edit-character" method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/edit">
+            	@csrf
+            	@method('GET')
+        	</form>
+    		<textarea class="form-control note space-below" readonly="readonly">{{ $character->note }}</textarea>
+            @can('dm', $user)
+            	<p>DM note</p>
+                <textarea class="form-control note" readonly="readonly">{{ $character->dm_note }}</textarea>
+            @endcan
+		</div>
+        
+    @endcomponent
+
 	@if (count($character->sessionCharacters))
         @component('layouts.card')
     

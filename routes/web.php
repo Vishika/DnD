@@ -30,6 +30,7 @@ Route::get('/user/{user}/character/{character}/edit', 'CharacterController@edit'
 Route::get('/user/{user}/character/{character}', 'CharacterController@show');
 Route::post('/user/{user}/character', 'CharacterController@store');
 Route::patch('/user/{user}/character/{character}', 'CharacterController@update');
+Route::patch('/user/{user}/character/{character}/note', 'CharacterController@updateNote');
 
 Route::get('/user/{user}/character/{character}/contribute', 'ContributionController@create');
 Route::post('/user/{user}/character/{character}/contribute', 'ContributionController@store');

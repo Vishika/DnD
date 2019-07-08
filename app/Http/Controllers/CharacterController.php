@@ -67,6 +67,27 @@ class CharacterController extends Controller
     }
     
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Character  $character
+     * @return \Illuminate\Http\Response
+     */
+    public function updateNote(User $user, Character $character, Request $request)
+    {
+        $this->authorize('owner', $user);
+        $regex = 'regex:/^[a-z0-9 :,.!().?";%#\'-_\n\r]+$/i';
+        if (auth()->user()->isPlayer()) {
+            $validated = request()->validate(['note' => [$regex],]);
+        } else {
+            $validated = request()->validate(['note' => [$regex], 'dm_note' => [$regex],]);
+        }
+        $character->update($validated);
+        session()->flash('message', "$character->name has been updated.");
+        return redirect('/user/' . $user->id . '/character/' . $character->id);
+    }
+    
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

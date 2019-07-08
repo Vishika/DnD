@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 
-                @if (Auth::user()->isAdmin() || Auth::user()->isDm())
+                @if (Auth::user()->isDm())
                     <div class="form-group row">
                         <div class="col-md-6 offset-md-4">
                             <div class="form-check">
@@ -78,9 +78,69 @@
                         </div>
                     </div>
                 @endif
-                
+
             </form>
     	</div>
 
     @endcomponent
+    
+    @component('layouts.card')
+    
+    	<div class="card-header">
+        	<div class="header-row">
+        		<div class="mr-auto slide">
+        			<a class="header-item">{{ __('Edit Notes') }}</a>
+    			</div>
+                <div class="ml-auto">
+                    <button class="header-item" form="edit-character-notes" type="submit">{{ __('Update') }}</button>
+                </div>
+            </div>
+    	</div>
+
+        <div class="card-body">
+            <form id="edit-character-notes" method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/note">
+            	@csrf
+            	@method('PATCH')
+    	
+    			<div class="form-group row note">
+                    <textarea id="note" class="form-control note @error('note') is-invalid @enderror" name="note">{{ $character->note }}</textarea>
+                    @error('note')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                
+                @if (Auth::user()->isDm())
+                    <div class="form-group row note">
+                        <p>{{ __('DM Note') }}</p>
+                        <textarea id="dm_note" class="form-control note @error('dm_note') is-invalid @enderror" name="dm_note">{{ $character->dm_note }}</textarea>
+            
+                        @error('dm_note')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                @endif
+			</form>
+			
+			@if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+		</div>
+    
+    @endcomponent
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+    	$('textarea').autoResize();
+    </script>
 @endsection
