@@ -99,7 +99,7 @@ class Character extends Model
         if ($this->attributes['level'] == 20) {
             return 100;
         } else {
-            return round($this->attributes['experience'] / self::$levels[$this->attributes['level'] + 1] * 100);
+            return round(($this->attributes['experience'] - self::$levels[$this->attributes['level']]) / (self::$levels[$this->attributes['level'] + 1] - self::$levels[$this->attributes['level']]) * 100);
         }
     }
 
