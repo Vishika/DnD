@@ -76,11 +76,11 @@ class CharacterController extends Controller
     public function updateNote(User $user, Character $character, Request $request)
     {
         $this->authorize('owner', $user);
-        $regex = 'regex:/^[a-z0-9 :,.!().?";%#\'-_\n\r]+$/i';
+        $validators = ['nullable', 'regex:/^[a-z0-9 :,.!().?";%#\'-_\n\r]+$/i'];
         if (auth()->user()->isPlayer()) {
-            $validated = request()->validate(['note' => [$regex],]);
+            $validated = request()->validate(['note' => $validators,]);
         } else {
-            $validated = request()->validate(['note' => [$regex], 'dm_note' => [$regex],]);
+            $validated = request()->validate(['note' => $validators, 'dm_note' => $validators,]);
         }
         $character->update($validated);
         session()->flash('message', "$character->name has been updated.");
