@@ -34,7 +34,7 @@
         		<p>Performing an Enchantment, Disenchantment or an Enchanted item summoning</p>
         		<ul>
         			<li>Only spell casters proficient in arcana can enchant, they can perform enchantments based on their level of proficiency.</li>
-        			<li>To be able to perform an enchantment of a certain rarity you must also have the required proficency bonus in arcana as indicated by 'Prof' in the table below. Expertize adds only to your proficiency in terms of using this.</li>
+        			<li>To be able to perform an enchantment of a certain rarity you must also have the required proficency bonus in arcana as indicated by 'Prof' in the table below. Expertize adds only one to your proficiency in terms of using this.</li>
         			<li>Enchanting, Disenchanting or Summoning enchanted items takes 2 days if the enchanter succeeds the arcana check.</li>
         			<li>The DC is based on the enchantments rarity. For each multiple of 5 higher than the DC that you reach the time is halved. Failure doubles the enchanting time and for each multiple of 5 lower than the DC the time is doubled.</li>
         			<li>When disenchanting an enchanted item, you can only obtain their common and uncommon enchantments, the rest are lost. The energy captured is put into a glass orb called a mertia.</li>
