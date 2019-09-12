@@ -126,7 +126,7 @@
                                     <td>{{ $sessionCharacter['experience'] }}</td>
                 				</tr>
                             @endforeach
-                      </tbody>          
+                      </tbody>
                     </table>
                 </div>
     		</div>
@@ -134,50 +134,48 @@
         @endcomponent
 	@endif
 
-    @if (count($character->trades))
-        @component('layouts.card')
-    
-        	<div class="card-header">
-            	<div class="header-row">
-            		<div class="mr-auto slide">
-            			<a class="header-item">{{ __('Trades') }}</a>
-        			</div>
-        			@can('dm', $user)
-                        <div class="ml-auto">
-                            <button class="header-item" form="trade" type="submit">{{ __('Trade') }}</button>
-                        </div>
-                    @endcan
-                </div>
-        	</div>
-    
-        	<div class="card-body" style="display: none;">
-                <form id="trade" method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/trade">
-                	@csrf
-                	@method('GET')
-            	</form>
-                
-                <div class="overflow">
-                    <table class="table alternating">
-                        <thead>
-                            <tr>
-                                <th>Amount</th>
-                                <th>Note</th>
-                            </tr>
-                        </thead> 
-                        <tbody>
-                        	@foreach ($character->trades as $trade)
-                				<tr>
-                                    <td>{{ $trade['gold'] }}</td>
-                                    <td>{{ $trade['note'] }}</td>
-                				</tr>
-                            @endforeach
-                      </tbody>          
-                    </table>
-                </div>
-    		</div>
-        	
-        @endcomponent
-	@endif
+    @component('layouts.card')
+
+    	<div class="card-header">
+        	<div class="header-row">
+        		<div class="mr-auto slide">
+        			<a class="header-item">{{ __('Trades') }}</a>
+    			</div>
+    			@can('dm', $user)
+                    <div class="ml-auto">
+                        <button class="header-item" form="trade" type="submit">{{ __('Trade') }}</button>
+                    </div>
+                @endcan
+            </div>
+    	</div>
+
+    	<div class="card-body" style="display: none;">
+            <form id="trade" method="POST" action="/user/{{ $character['user_id'] }}/character/{{ $character['id'] }}/trade">
+            	@csrf
+            	@method('GET')
+        	</form>
+            
+            <div class="overflow">
+                <table class="table alternating">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead> 
+                    <tbody>
+                    	@foreach ($character->trades as $trade)
+            				<tr>
+                                <td>{{ $trade['gold'] }}</td>
+                                <td>{{ $trade['note'] }}</td>
+            				</tr>
+                        @endforeach
+                  </tbody>          
+                </table>
+            </div>
+		</div>
+    	
+    @endcomponent
     
     @if (count($character->contributions))
         @component('layouts.card')
