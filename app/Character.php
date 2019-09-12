@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Character extends Model
 {
+    private static $min_level = 5;
+
     private static $levels = [
-        3 => 0,
-        4 => 2700,
-        5 => 6500,
+        5 => 0,
         6 => 14000,
         7 => 23000,
         8 => 34000,
@@ -91,15 +91,18 @@ class Character extends Model
         if ($this->attributes['experience'] == 20) {
             return 0;
         } else {
-            return (self::$levels[$this->attributes['level'] + 1] - $this->attributes['experience']);
+            return (self::$levels[$this->getMinLevel() + 1] - $this->attributes['experience']);
         }
     }
 
     public function experienceProgress() {
-        if ($this->attributes['level'] == 20) {
+        if ($this->getMinLevel() == 20) {
             return 100;
         } else {
-            return round(($this->attributes['experience'] - self::$levels[$this->attributes['level']]) / (self::$levels[$this->attributes['level'] + 1] - self::$levels[$this->attributes['level']]) * 100);
+            if (((self::$levels[$this->getMinLevel() + 1] - self::$levels[$this->getMinLevel()]) * 100) == 0) {
+                dd('shit');
+            }
+            return round(($this->attributes['experience'] - self::$levels[$this->getMinLevel()]) / (self::$levels[$this->getMinLevel() + 1] - self::$levels[$this->getMinLevel()]) * 100);
         }
     }
 
@@ -110,6 +113,11 @@ class Character extends Model
         $this->updateLevel();
     }
     
+    private function getMinLevel()
+    {
+        return max($this->attributes['level'], self::$min_level);
+    }
+
     private function updateLevel()
     {
         foreach (self::$levels as $level => $xpThreshold)

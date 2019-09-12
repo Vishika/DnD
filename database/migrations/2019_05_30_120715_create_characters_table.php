@@ -19,7 +19,7 @@ class CreateCharactersTable extends Migration
             $table->string('name')->unique();
             $table->unsignedBigInteger('gold')->default(0);
             $table->unsignedBigInteger('experience')->default(0);
-            $table->unsignedInteger('level')->default(3);
+            $table->unsignedInteger('level')->default(5);
             $table->string('race');
             $table->string('class');
             $table->boolean('active')->default(true);
