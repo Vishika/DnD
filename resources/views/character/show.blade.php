@@ -63,6 +63,13 @@
                     <input id="level" type="text" class="form-control" name="level" value="{{ $character->level }}" readonly="readonly">
                 </div>
             </div>
+            
+            <div class="form-group row">
+                <label for="deaths" class="col-md-4 col-form-label text-md-right">{{ __('Deaths') }}</label>
+                <div class="col-md-6">
+                    <input id="deaths" type="text" class="form-control" name="deaths" value="{{ $character->deaths }}" readonly="readonly">
+                </div>
+            </div>
 		</div>
         
     @endcomponent
@@ -120,7 +127,7 @@
                         </thead> 
                         <tbody>
                         	@foreach ($character->sessionCharacters as $sessionCharacter)
-                				<tr>
+                        		<tr style="{{ (Str::contains($sessionCharacter['note'], 'Death')) ? 'color: #c53131;' : '' }}">
                                     <td>{{ $sessionCharacter->session['name'] }}</td>
                                     <td>{{ $sessionCharacter['gold'] }}</td>
                                     <td>{{ $sessionCharacter['experience'] }}</td>
